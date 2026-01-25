@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Services Finder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --bg-color: #f5f5f5;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-color);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background: #f0f0f0;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .search-panel {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        input, select, textarea {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        #map {
+            height: 500px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .provider-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .provider-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .provider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .provider-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .price-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .price-budget {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .price-mid-range {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .price-premium {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 1.1rem;
+        }
+
+        .provider-info {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .provider-info div {
+            margin-bottom: 0.5rem;
+        }
+
+        .services-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .service-tag {
+            background: #e9ecef;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #495057;
+        }
+
+        .admin-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .providers-list {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .provider-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .provider-item:hover {
+            background: #f8f9fa;
+        }
+
+        .provider-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .export-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .export-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .category-manager {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .category-list {
+            display: grid;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            border: 2px solid #ddd;
+        }
+
+        @media (max-width: 768px) {
+            .search-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 id="appTitle">🚗 Lusaka Auto Services Finder</h1>
+        <p id="appTagline">Find the right mechanic for your vehicle and budget</p>
+    </div>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('search')">🔍 Find Services</button>
+            <button class="tab" onclick="switchTab('admin')">⚙️ Manage Providers</button>
+            <button class="tab" onclick="switchTab('categories')">📋 Manage Categories</button>
+            <button class="tab" onclick="switchTab('branding')">🎨 App Settings</button>
+            <button class="tab" onclick="switchTab('data')">💾 Data Management</button>
+        </div>
+
+        <!-- SEARCH TAB -->
+        <div id="search-tab" class="tab-content active">
+            <div class="search-panel">
+                <h3 style="margin-bottom: 1rem;">What service do you need?</h3>
+                <div class="search-grid">
+                    <div class="form-group">
+                        <label>Service Type</label>
+                        <select id="serviceType"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Budget Range</label>
+                        <select id="budgetRange">
+                            <option value="">Any Budget</option>
+                            <option value="budget">Budget Friendly</option>
+                            <option value="mid-range">Mid Range</option>
+                            <option value="premium">Premium</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Area</label>
+                        <select id="areaFilter"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle Make (Optional)</label>
+                        <input type="text" id="vehicleMake" placeholder="e.g., Toyota, Nissan">
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="searchProviders()">Search</button>
+            </div>
+
+            <div id="map"></div>
+
+            <div id="results" class="results-grid"></div>
+        </div>
+
+        <!-- ADMIN TAB -->
+        <div id="admin-tab" class="tab-content">
+            <div class="admin-form">
+                <h3 style="margin-bottom: 1.5rem;">Add New Service Provider</h3>
+                <form id="providerForm" onsubmit="saveProvider(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Business Name *</label>
+                            <input type="text" id="businessName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="phoneNumber" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Area *</label>
+                            <select id="area" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Price Range *</label>
+                            <select id="priceRange" required>
+                                <option value="budget">Budget Friendly</option>
+                                <option value="mid-range">Mid Range</option>
+                                <option value="premium">Premium</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Latitude *</label>
+                            <input type="number" step="0.000001" id="latitude" required placeholder="-15.4167">
+                        </div>
+                        <div class="form-group">
+                            <label>Longitude *</label>
+                            <input type="number" step="0.000001" id="longitude" required placeholder="28.2833">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Street Address</label>
+                        <input type="text" id="streetAddress">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Services Offered (select multiple, hold Ctrl/Cmd)</label>
+                        <select id="services" multiple size="6"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle Specializations (comma separated)</label>
+                        <input type="text" id="specializations" placeholder="Toyota, Nissan, Honda">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Rating (1-5)</label>
+                            <input type="number" min="1" max="5" step="0.1" id="rating" value="4.0">
+                        </div>
+                        <div class="form-group">
+                            <label>Years in Business</label>
+                            <input type="number" id="yearsInBusiness" min="0">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <button type="submit" class="btn-primary">Save Provider</button>
+                        <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="providers-list">
+                <h3 style="padding: 1rem; background: #f8f9fa;">Existing Providers</h3>
+                <div id="providersList"></div>
+            </div>
+        </div>
+
+        <!-- CATEGORIES TAB -->
+        <div id="categories-tab" class="tab-content">
+            <div class="category-manager">
+                <h3>Manage Service Categories</h3>
+                <p style="color: #666; margin-bottom: 1.5rem;">Add, edit, or remove service categories</p>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category Name *</label>
+                        <input type="text" id="categoryName" placeholder="e.g., Engine Repair">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="categoryDescription" placeholder="Brief description">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <button class="btn-primary" onclick="saveCategory()">Add Category</button>
+                    <button class="btn-secondary" onclick="resetCategoryForm()">Clear</button>
+                </div>
+
+                <h4 style="margin-bottom: 1rem;">Current Categories</h4>
+                <div id="categoryList" class="category-list"></div>
+            </div>
+
+            <div class="category-manager">
+                <h3>Manage Areas/Locations</h3>
+                <p style="color: #666; margin-bottom: 1.5rem;">Add areas where service providers are located</p>
+                
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Area Name *</label>
+                    <input type="text" id="areaName" placeholder="e.g., Kabulonga, CBD">
+                </div>
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <button class="btn-primary" onclick="saveArea()">Add Area</button>
+                    <button class="btn-secondary" onclick="document.getElementById('areaName').value = ''">Clear</button>
+                </div>
+
+                <h4 style="margin-bottom: 1rem;">Current Areas</h4>
+                <div id="areaList" class="category-list"></div>
+            </div>
+        </div>
+
+        <!-- BRANDING TAB -->
+        <div id="branding-tab" class="tab-content">
+            <div class="admin-form">
+                <h3 style="margin-bottom: 1.5rem;">App Branding & Settings</h3>
+                
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label>App Title</label>
+                    <input type="text" id="brandAppTitle" placeholder="e.g., Lusaka Auto Services Finder">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label>App Tagline</label>
+                    <input type="text" id="brandAppTagline" placeholder="e.g., Find the right mechanic for your vehicle">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label>App Icon/Emoji</label>
+                    <input type="text" id="brandAppIcon" placeholder="e.g., 🚗" maxlength="2">
+                    <small style="color: #666; margin-top: 0.5rem;">Enter an emoji or leave blank</small>
+                </div>
+
+                <h4 style="margin: 2rem 0 1rem 0;">Color Scheme</h4>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Primary Color</label>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <input type="color" id="brandPrimaryColor" style="width: 60px; height: 40px;">
+                            <input type="text" id="brandPrimaryColorHex" placeholder="#667eea" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Secondary Color</label>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <input type="color" id="brandSecondaryColor" style="width: 60px; height: 40px;">
+                            <input type="text" id="brandSecondaryColorHex" placeholder="#764ba2" style="flex: 1;">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button class="btn-primary" onclick="saveBranding()">Save Settings</button>
+                    <button class="btn-secondary" onclick="resetBranding()">Reset to Default</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DATA MANAGEMENT TAB -->
+        <div id="data-tab" class="tab-content">
+            <div class="export-section">
+                <h3>Export / Import Data</h3>
+                <p style="margin-bottom: 1.5rem; color: #666;">Backup your data or transfer it to another browser</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn-primary" onclick="exportData()">📥 Export All Data</button>
+                    <button class="btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import Data</button>
+                    <button class="btn-danger" onclick="clearAllData()">🗑️ Clear All Data</button>
+                </div>
+                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+        let map;
+        let markers = [];
+        let providers = [];
+        let categories = [];
+        let areas = [];
+        let branding = {};
+        let editingId = null;
+        let editingCategoryId = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            initMap();
+            applyBranding();
+            updateDropdowns();
+            displayProviders();
+            displayProvidersList();
+            displayCategories();
+            displayAreas();
+            
+            // Add event listeners for color inputs
+            document.getElementById('brandPrimaryColor').addEventListener('input', e => {
+                document.getElementById('brandPrimaryColorHex').value = e.target.value;
+            });
+            document.getElementById('brandSecondaryColor').addEventListener('input', e => {
+                document.getElementById('brandSecondaryColorHex').value = e.target.value;
+            });
+            document.getElementById('brandPrimaryColorHex').addEventListener('input', e => {
+                if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                    document.getElementById('brandPrimaryColor').value = e.target.value;
+                }
+            });
+            document.getElementById('brandSecondaryColorHex').addEventListener('input', e => {
+                if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                    document.getElementById('brandSecondaryColor').value = e.target.value;
+                }
+            });
+        });
+
+        function loadData() {
+            const storedProviders = localStorage.getItem('autoProviders');
+            const storedCategories = localStorage.getItem('autoCategories');
+            const storedAreas = localStorage.getItem('autoAreas');
+            const storedBranding = localStorage.getItem('autoBranding');
+
+            providers = storedProviders ? JSON.parse(storedProviders) : [];
+            categories = storedCategories ? JSON.parse(storedCategories) : getDefaultCategories();
+            areas = storedAreas ? JSON.parse(storedAreas) : getDefaultAreas();
+            branding = storedBranding ? JSON.parse(storedBranding) : getDefaultBranding();
+
+            if (!storedCategories) saveCategories();
+            if (!storedAreas) saveAreas();
+            if (!storedBranding) saveBrandingData();
+        }
+
+        function getDefaultCategories() {
+            return [
+                {id: 1, name: 'Engine Repair', description: 'Engine diagnostics and repairs'},
+                {id: 2, name: 'Transmission', description: 'Automatic and manual transmission'},
+                {id: 3, name: 'Electrical Systems', description: 'Wiring and electrical repairs'},
+                {id: 4, name: 'Brake Services', description: 'Brake pads and rotors'},
+                {id: 5, name: 'Suspension & Steering', description: 'Shock absorbers and alignment'},
+                {id: 6, name: 'Body Work & Paint', description: 'Dent repair and painting'},
+                {id: 7, name: 'Tire Services', description: 'Tire sales and mounting'},
+                {id: 8, name: 'Air Conditioning', description: 'AC repair and recharging'},
+                {id: 9, name: 'Detailing & Cleaning', description: 'Interior and exterior cleaning'},
+                {id: 10, name: 'Oil Change & Maintenance', description: 'Routine maintenance'}
+            ];
+        }
+
+        function getDefaultAreas() {
+            return ['CBD', 'Kabulonga', 'Roma', 'Woodlands', 'Chelston', 'Kabwata'];
+        }
+
+        function getDefaultBranding() {
+            return {
+                title: 'Lusaka Auto Services Finder',
+                tagline: 'Find the right mechanic for your vehicle and budget',
+                icon: '🚗',
+                primaryColor: '#667eea',
+                secondaryColor: '#764ba2'
+            };
+        }
+
+        function saveProviders() {
+            localStorage.setItem('autoProviders', JSON.stringify(providers));
+        }
+
+        function saveCategories() {
+            localStorage.setItem('autoCategories', JSON.stringify(categories));
+        }
+
+        function saveAreas() {
+            localStorage.setItem('autoAreas', JSON.stringify(areas));
+        }
+
+        function saveBrandingData() {
+            localStorage.setItem('autoBranding', JSON.stringify(branding));
+        }
+
+        function initMap() {
+            map = L.map('map').setView([-15.4167, 28.2833], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + '-tab').classList.add('active');
+        }
+
+        function updateDropdowns() {
+            // Update service type dropdown
+            const serviceSelect = document.getElementById('serviceType');
+            serviceSelect.innerHTML = '<option value="">All Services</option>' +
+                categories.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+
+            // Update area filter dropdown
+            const areaFilterSelect = document.getElementById('areaFilter');
+            areaFilterSelect.innerHTML = '<option value="">All Areas</option>' +
+                areas.map(a => `<option value="${a}">${a}</option>`).join('');
+
+            // Update area dropdown in provider form
+            const areaSelect = document.getElementById('area');
+            areaSelect.innerHTML = '<option value="">Select Area</option>' +
+                areas.map(a => `<option value="${a}">${a}</option>`).join('');
+
+            // Update services multi-select in provider form
+            const servicesSelect = document.getElementById('services');
+            servicesSelect.innerHTML = categories.map(c => 
+                `<option value="${c.name}">${c.name}</option>`
+            ).join('');
+        }
+
+        function applyBranding() {
+            document.getElementById('appTitle').textContent = 
+                (branding.icon ? branding.icon + ' ' : '') + branding.title;
+            document.getElementById('appTagline').textContent = branding.tagline;
+            document.title = branding.title;
+
+            document.documentElement.style.setProperty('--primary-color', branding.primaryColor);
+            document.documentElement.style.setProperty('--secondary-color', branding.secondaryColor);
+
+            // Update branding form
+            document.getElementById('brandAppTitle').value = branding.title;
+            document.getElementById('brandAppTagline').value = branding.tagline;
+            document.getElementById('brandAppIcon').value = branding.icon || '';
+            document.getElementById('brandPrimaryColor').value = branding.primaryColor;
+            document.getElementById('brandPrimaryColorHex').value = branding.primaryColor;
+            document.getElementById('brandSecondaryColor').value = branding.secondaryColor;
+            document.getElementById('brandSecondaryColorHex').value = branding.secondaryColor;
+        }
+
+        function saveBranding() {
+            branding = {
+                title: document.getElementById('brandAppTitle').value || 'Auto Services Finder',
+                tagline: document.getElementById('brandAppTagline').value || '',
+                icon: document.getElementById('brandAppIcon').value || '',
+                primaryColor: document.getElementById('brandPrimaryColor').value,
+                secondaryColor: document.getElementById('brandSecondaryColor').value
+            };
+            saveBrandingData();
+            applyBranding();
+            alert('Branding updated successfully!');
+        }
+
+        function resetBranding() {
+            if (confirm('Reset to default branding?')) {
+                branding = getDefaultBranding();
+                saveBrandingData();
+                applyBranding();
+            }
+        }
+
+        function saveCategory() {
+            const name = document.getElementById('categoryName').value.trim();
+            const description = document.getElementById('categoryDescription').value.trim();
+
+            if (!name) {
+                alert('Please enter a category name');
+                return;
+            }
+
+            if (editingCategoryId) {
+                const index = categories.findIndex(c => c.id === editingCategoryId);
+                categories[index] = {id: editingCategoryId, name, description};
+                editingCategoryId = null;
+            } else {
+                const id = categories.length > 0 ? Math.max(...categories.map(c => c.id)) + 1 : 1;
+                categories.push({id, name, description});
+            }
+
+            saveCategories();
+            updateDropdowns();
+            displayCategories();
+            resetCategoryForm();
+            alert('Category saved!');
+        }
+
+        function resetCategoryForm() {
+            document.getElementById('categoryName').value = '';
+            document.getElementById('categoryDescription').value = '';
+            editingCategoryId = null;
+        }
+
+        function editCategory(id) {
+            const category = categories.find(c => c.id === id);
+            if (!category) return;
+
+            document.getElementById('categoryName').value = category.name;
+            document.getElementById('categoryDescription').value = category.description || '';
+            editingCategoryId = id;
+            window.scrollTo(0, 0);
+        }
+
+        function deleteCategory(id) {
+            if (confirm('Delete this category? Providers using it will keep the name.')) {
+                categories = categories.filter(c => c.id !== id);
+                saveCategories();
+                updateDropdowns();
+                displayCategories();
+            }
+        }
+
+        function displayCategories() {
+            const container = document.getElementById('categoryList');
+            if (categories.length === 0) {
+                container.innerHTML = '<div class="no-results">No categories yet.</div>';
+                return;
+            }
+
+            container.innerHTML = categories.map(c => `
+                <div class="category-item">
+                    <div>
+                        <strong>${c.name}</strong>
+                        ${c.description ? `<br><small style="color: #666;">${c.description}</small>` : ''}
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn-secondary btn-small" onclick="editCategory(${c.id})">Edit</button>
+                        <button class="btn-danger btn-small" onclick="deleteCategory(${c.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveArea() {
+            const area = document.getElementById('areaName').value.trim();
+            if (!area) {
+                alert('Please enter an area name');
+                return;
+            }
+
+            if (!areas.includes(area)) {
+                areas.push(area);
+                saveAreas();
+                updateDropdowns();
+                displayAreas();
+                document.getElementById('areaName').value = '';
+                alert('Area added!');
+            } else {
+                alert('Area already exists');
+            }
+        }
+
+        function deleteArea(area) {
+            if (confirm(`Delete area "${area}"?`)) {
+                areas = areas.filter(a => a !== area);
+                saveAreas();
+                updateDropdowns();
+                displayAreas();
+            }
+        }
+
+        function displayAreas() {
+            const container = document.getElementById('areaList');
+            if (areas.length === 0) {
+                container.innerHTML = '<div class="no-results">No areas yet.</div>';
+                return;
+            }
+
+            container.innerHTML = areas.map(a => `
+                <div class="category-item">
+                    <div><strong>${a}</strong></div>
+                    <button class="btn-danger btn-small" onclick="deleteArea('${a}')">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        function saveProvider(e) {
+            e.preventDefault();
+            
+            const servicesSelect = document.getElementById('services');
+            const selectedServices = Array.from(servicesSelect.selectedOptions).map(o => o.value);
+
+            const provider = {
+                id: editingId || Date.now(),
+                businessName: document.getElementById('businessName').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                area: document.getElementById('area').value,
+                priceRange: document.getElementById('priceRange').value,
+                latitude: parseFloat(document.getElementById('latitude').value),
+                longitude: parseFloat(document.getElementById('longitude').value),
+                streetAddress: document.getElementById('streetAddress').value,
+                description: document.getElementById('description').value,
+                services: selectedServices,
+                specializations: document.getElementById('specializations').value.split(',').map(s => s.trim()).filter(s => s),
+                rating: parseFloat(document.getElementById('rating').value) || 4.0,
+                yearsInBusiness: parseInt(document.getElementById('yearsInBusiness').value) || 0
+            };
+
+            if (editingId) {
+                const index = providers.findIndex(p => p.id === editingId);
+                providers[index] = provider;
+                editingId = null;
+            } else {
+                providers.push(provider);
+            }
+
+            saveProviders();
+            resetForm();
+            displayProvidersList();
+            displayProviders();
+            alert('Provider saved successfully!');
+        }
+
+        function resetForm() {
+            document.getElementById('providerForm').reset();
+            editingId = null;
+        }
+
+        function editProvider(id) {
+            const provider = providers.find(p => p.id === id);
+            if (!provider) return;
+
+            editingId = id;
+            document.getElementById('businessName').value = provider.businessName;
+            document.getElementById('phoneNumber').value = provider.phoneNumber;
+            document.getElementById('area').value = provider.area;
+            document.getElementById('priceRange').value = provider.priceRange;
+            document.getElementById('latitude').value = provider.latitude;
+            document.getElementById('longitude').value = provider.longitude;
+            document.getElementById('streetAddress').value = provider.streetAddress || '';
+            document.getElementById('description').value = provider.description || '';
+            
+            const servicesSelect = document.getElementById('services');
+            Array.from(servicesSelect.options).forEach(option => {
+                option.selected = provider.services.includes(option.value);
+            });
+            
+            document.getElementById('specializations').value = provider.specializations.join(', ');
+            document.getElementById('rating').value = provider.rating;
+            document.getElementById('yearsInBusiness').value = provider.yearsInBusiness || 0;
+
+            switchTab('admin');
+            window.scrollTo(0, 0);
+        }
+
+        function deleteProvider(id) {
+            if (confirm('Are you sure you want to delete this provider?')) {
+                providers = providers.filter(p => p.id !== id);
+                saveProviders();
+                displayProvidersList();
+                displayProviders();
+            }
+        }
+
+        function displayProvidersList() {
+            const container = document.getElementById('providersList');
+            if (providers.length === 0) {
+                container.innerHTML = '<div class="no-results">No providers yet. Add your first provider above!</div>';
+                return;
+            }
+
+            container.innerHTML = providers.map(p => `
+                <div class="provider-item">
+                    <div>
+                        <strong>${p.businessName}</strong><br>
+                        <small>${p.area} • ${p.phoneNumber}</small>
+                    </div>
+                    <div class="provider-actions">
+                        <button class="btn-secondary btn-small" onclick="editProvider(${p.id})">Edit</button>
+                        <button class="btn-danger btn-small" onclick="deleteProvider(${p.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function searchProviders() {
+            displayProviders();
+        }
+
+        function displayProviders() {
+            const serviceType = document.getElementById('serviceType').value;
+            const budgetRange = document.getElementById('budgetRange').value;
+            const area = document.getElementById('areaFilter').value;
+            const vehicleMake = document.getElementById('vehicleMake').value.toLowerCase();
+
+            let filtered = providers.filter(p => {
+                if (serviceType && !p.services.includes(serviceType)) return false;
+                if (budgetRange && p.priceRange !== budgetRange) return false;
+                if (area && p.area !== area) return false;
+                if (vehicleMake && !p.specializations.some(s => s.toLowerCase().includes(vehicleMake))) return false;
+                return true;
+            });
+
+            filtered.sort((a, b) => b.rating - a.rating);
+
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+
+            filtered.forEach(p => {
+                const marker = L.marker([p.latitude, p.longitude])
+                    .bindPopup(`<strong>${p.businessName}</strong><br>${p.area}`);
+                marker.addTo(map);
+                markers.push(marker);
+            });
+
+            if (filtered.length > 0) {
+                const bounds = L.latLngBounds(filtered.map(p => [p.latitude, p.longitude]));
+                map.fitBounds(bounds, { padding: [50, 50] });
+            }
+
+            const resultsDiv = document.getElementById('results');
+            if (filtered.length === 0) {
+                resultsDiv.innerHTML = '<div class="no-results">No providers found matching your criteria. Try adjusting your filters.</div>';
+                return;
+            }
+
+            resultsDiv.innerHTML = filtered.map(p => `
+                <div class="provider-card">
+                    <div class="provider-header">
+                        <div class="provider-name">${p.businessName}</div>
+                        <div class="price-badge price-${p.priceRange}">${p.priceRange.replace('-', ' ')}</div>
+                    </div>
+                    <div class="rating">
+                        <div class="stars">${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5 - Math.round(p.rating))}</div>
+                        <span>${p.rating.toFixed(1)}</span>
+                    </div>
+                    <div class="provider-info">
+                        <div>📍 ${p.area}${p.streetAddress ? ', ' + p.streetAddress : ''}</div>
+                        <div>📞 ${p.phoneNumber}</div>
+                        ${p.yearsInBusiness ? `<div>🏆 ${p.yearsInBusiness} years in business</div>` : ''}
+                        ${p.description ? `<div style="margin-top: 0.5rem;">${p.description}</div>` : ''}
+                        ${p.specializations.length ? `<div style="margin-top: 0.5rem;"><strong>Specializes in:</strong> ${p.specializations.join(', ')}</div>` : ''}
+                    </div>
+                    ${p.services.length ? `
+                        <div class="services-tags">
+                            ${p.services.map(s => `<span class="service-tag">${s}</span>`).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function exportData() {
+            const data = {
+                providers,
+                categories,
+                areas,
+                branding,
+                exportDate: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `auto-services-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importData(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const imported = JSON.parse(event.target.result);
+                    if (confirm(`Import data? This will replace all existing data.`)) {
+                        providers = imported.providers || [];
+                        categories = imported.categories || getDefaultCategories();
+                        areas = imported.areas || getDefaultAreas();
+                        branding = imported.branding || getDefaultBranding();
+                        
+                        saveProviders();
+                        saveCategories();
+                        saveAreas();
+                        saveBrandingData();
+                        
+                        applyBranding();
+                        updateDropdowns();
+                        displayProviders();
+                        displayProvidersList();
+                        displayCategories();
+                        displayAreas();
+                        
+                        alert('Data imported successfully!');
+                    }
+                } catch (err) {
+                    alert('Error importing data. Please check the file format.');
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure? This will delete ALL data permanently!')) {
+                if (confirm('Really sure? This cannot be undone!')) {
+                    providers = [];
+                    categories = getDefaultCategories();
+                    areas = getDefaultAreas();
+                    branding = getDefaultBranding();
+                    
+                    saveProviders();
+                    saveCategories();
+                    saveAreas();
+                    saveBrandingData();
+                    
+                    applyBranding();
+                    updateDropdowns();
+                    displayProviders();
+                    displayProvidersList();
+                    displayCategories();
+                    displayAreas();
+                    
+                    alert('All data cleared.');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
