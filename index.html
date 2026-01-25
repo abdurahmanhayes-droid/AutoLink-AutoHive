@@ -28,6 +28,7 @@
             color: white;
             padding: 1.5rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
         }
 
         .header h1 {
@@ -38,6 +39,74 @@
         .header p {
             opacity: 0.9;
             font-size: 0.9rem;
+        }
+
+        .admin-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .admin-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .login-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-overlay.active {
+            display: flex;
+        }
+
+        .login-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-box h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .login-box .error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .login-box .error.show {
+            display: block;
         }
 
         .container {
@@ -70,6 +139,10 @@
         .tab.active {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
+        }
+
+        .tab.admin-only {
+            display: none;
         }
 
         .tab:hover:not(.active) {
@@ -334,13 +407,6 @@
             border-radius: 6px;
         }
 
-        .color-preview {
-            width: 30px;
-            height: 30px;
-            border-radius: 4px;
-            border: 2px solid #ddd;
-        }
-
         @media (max-width: 768px) {
             .search-grid {
                 grid-template-columns: 1fr;
@@ -349,22 +415,52 @@
             .results-grid {
                 grid-template-columns: 1fr;
             }
+
+            .admin-toggle {
+                position: static;
+                display: block;
+                margin-top: 1rem;
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <h2>Admin Access</h2>
+            <p style="color: #666; margin-bottom: 1.5rem;">Enter your admin password to manage the app</p>
+            <input type="password" id="adminPassword" placeholder="Enter password">
+            <div class="error" id="loginError">Incorrect password</div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn-primary" onclick="checkAdminPassword()">Login</button>
+                <button class="btn-secondary" onclick="closeLogin()">Cancel</button>
+            </div>
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;">
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;"><strong>First time?</strong></p>
+                <p style="font-size: 0.85rem; color: #666;">Set your admin password:</p>
+                <input type="password" id="newAdminPassword" placeholder="Create admin password" style="margin-top: 0.5rem;">
+                <button class="btn-primary" style="width: 100%; margin-top: 0.5rem;" onclick="setAdminPassword()">Set Password</button>
+            </div>
+        </div>
+    </div>
+
     <div class="header">
         <h1 id="appTitle">🚗 Lusaka Auto Services Finder</h1>
         <p id="appTagline">Find the right mechanic for your vehicle and budget</p>
+        <button class="admin-toggle" onclick="toggleAdmin()">
+            <span id="adminButtonText">Admin Login</span>
+        </button>
     </div>
 
     <div class="container">
         <div class="tabs">
             <button class="tab active" onclick="switchTab('search')">🔍 Find Services</button>
-            <button class="tab" onclick="switchTab('admin')">⚙️ Manage Providers</button>
-            <button class="tab" onclick="switchTab('categories')">📋 Manage Categories</button>
-            <button class="tab" onclick="switchTab('branding')">🎨 App Settings</button>
-            <button class="tab" onclick="switchTab('data')">💾 Data Management</button>
+            <button class="tab admin-only" onclick="switchTab('admin')">⚙️ Manage Providers</button>
+            <button class="tab admin-only" onclick="switchTab('categories')">📋 Manage Categories</button>
+            <button class="tab admin-only" onclick="switchTab('branding')">🎨 App Settings</button>
+            <button class="tab admin-only" onclick="switchTab('data')">💾 Data Management</button>
         </div>
 
         <!-- SEARCH TAB -->
@@ -563,6 +659,13 @@
                     </div>
                 </div>
 
+                <h4 style="margin: 2rem 0 1rem 0;">Admin Password</h4>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Change Admin Password</label>
+                    <input type="password" id="changeAdminPassword" placeholder="Enter new password">
+                    <button class="btn-secondary" style="margin-top: 0.5rem;" onclick="changePassword()">Update Password</button>
+                </div>
+
                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
                     <button class="btn-primary" onclick="saveBranding()">Save Settings</button>
                     <button class="btn-secondary" onclick="resetBranding()">Reset to Default</button>
@@ -595,8 +698,8 @@
         let branding = {};
         let editingId = null;
         let editingCategoryId = null;
+        let isAdminMode = false;
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadData();
             initMap();
@@ -607,7 +710,6 @@
             displayCategories();
             displayAreas();
             
-            // Add event listeners for color inputs
             document.getElementById('brandPrimaryColor').addEventListener('input', e => {
                 document.getElementById('brandPrimaryColorHex').value = e.target.value;
             });
@@ -623,6 +725,10 @@
                 if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
                     document.getElementById('brandSecondaryColor').value = e.target.value;
                 }
+            });
+
+            document.getElementById('adminPassword').addEventListener('keypress', e => {
+                if (e.key === 'Enter') checkAdminPassword();
             });
         });
 
@@ -687,6 +793,80 @@
             localStorage.setItem('autoBranding', JSON.stringify(branding));
         }
 
+        function toggleAdmin() {
+            if (isAdminMode) {
+                logoutAdmin();
+            } else {
+                document.getElementById('loginOverlay').classList.add('active');
+            }
+        }
+
+        function closeLogin() {
+            document.getElementById('loginOverlay').classList.remove('active');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginError').classList.remove('show');
+        }
+
+        function setAdminPassword() {
+            const newPassword = document.getElementById('newAdminPassword').value;
+            if (!newPassword) {
+                alert('Please enter a password');
+                return;
+            }
+            localStorage.setItem('adminPassword', newPassword);
+            alert('Admin password set successfully! You can now login.');
+            document.getElementById('newAdminPassword').value = '';
+        }
+
+        function checkAdminPassword() {
+            const storedPassword = localStorage.getItem('adminPassword');
+            const enteredPassword = document.getElementById('adminPassword').value;
+
+            if (!storedPassword) {
+                alert('No admin password set. Please set one first.');
+                return;
+            }
+
+            if (enteredPassword === storedPassword) {
+                isAdminMode = true;
+                closeLogin();
+                enableAdminMode();
+            } else {
+                document.getElementById('loginError').classList.add('show');
+            }
+        }
+
+        function enableAdminMode() {
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = 'block';
+            });
+            document.getElementById('adminButtonText').textContent = '🔓 Logout';
+            alert('Admin mode enabled!');
+        }
+
+        function logoutAdmin() {
+            isAdminMode = false;
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.getElementById('adminButtonText').textContent = 'Admin Login';
+            switchTab('search');
+            alert('Logged out of admin mode');
+        }
+
+        function changePassword() {
+            const newPassword = document.getElementById('changeAdminPassword').value;
+            if (!newPassword) {
+                alert('Please enter a new password');
+                return;
+            }
+            if (confirm('Change admin password?')) {
+                localStorage.setItem('adminPassword', newPassword);
+                alert('Password updated successfully!');
+                document.getElementById('changeAdminPassword').value = '';
+            }
+        }
+
         function initMap() {
             map = L.map('map').setView([-15.4167, 28.2833], 12);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -703,22 +883,18 @@
         }
 
         function updateDropdowns() {
-            // Update service type dropdown
             const serviceSelect = document.getElementById('serviceType');
             serviceSelect.innerHTML = '<option value="">All Services</option>' +
                 categories.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
 
-            // Update area filter dropdown
             const areaFilterSelect = document.getElementById('areaFilter');
             areaFilterSelect.innerHTML = '<option value="">All Areas</option>' +
                 areas.map(a => `<option value="${a}">${a}</option>`).join('');
 
-            // Update area dropdown in provider form
             const areaSelect = document.getElementById('area');
             areaSelect.innerHTML = '<option value="">Select Area</option>' +
                 areas.map(a => `<option value="${a}">${a}</option>`).join('');
 
-            // Update services multi-select in provider form
             const servicesSelect = document.getElementById('services');
             servicesSelect.innerHTML = categories.map(c => 
                 `<option value="${c.name}">${c.name}</option>`
@@ -734,7 +910,6 @@
             document.documentElement.style.setProperty('--primary-color', branding.primaryColor);
             document.documentElement.style.setProperty('--secondary-color', branding.secondaryColor);
 
-            // Update branding form
             document.getElementById('brandAppTitle').value = branding.title;
             document.getElementById('brandAppTagline').value = branding.tagline;
             document.getElementById('brandAppIcon').value = branding.icon || '';
