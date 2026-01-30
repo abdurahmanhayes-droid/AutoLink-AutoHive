@@ -1161,13 +1161,28 @@
             const serviceType = document.getElementById('serviceType').value;
             const budgetRange = document.getElementById('budgetRange').value;
             const area = document.getElementById('areaFilter').value;
-            const vehicleMake = document.getElementById('vehicleMake').value.toLowerCase();
+            const vehicleMake = document.getElementById('vehicleMake').value.toLowerCase().trim();
 
             let filtered = providers.filter(p => {
                 if (serviceType && !p.services.includes(serviceType)) return false;
                 if (budgetRange && p.priceRange !== budgetRange) return false;
                 if (area && p.area !== area) return false;
-                if (vehicleMake && !p.specializations.some(s => s.toLowerCase().includes(vehicleMake))) return false;
+                
+                // Vehicle make filter - if user enters vehicle, check if provider has ANY specializations
+                // If provider has no specializations, they work on all vehicles (show them)
+                // If provider has specializations, check if it matches
+                if (vehicleMake) {
+                    if (!p.specializations || p.specializations.length === 0) {
+                        // Provider works on all vehicles
+                        return true;
+                    }
+                    // Check if any specialization matches
+                    const matches = p.specializations.some(s => 
+                        s.toLowerCase().trim().includes(vehicleMake) || 
+                        vehicleMake.includes(s.toLowerCase().trim())
+                    );
+                    if (!matches) return false;
+                }
                 return true;
             });
 
@@ -1299,4 +1314,4 @@
         }
     </script>
 </body>
-</html>
+                                                                                        </html>
