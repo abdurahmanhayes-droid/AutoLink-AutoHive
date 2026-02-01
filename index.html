@@ -15,47 +15,78 @@
         :root {
             --primary-color: #667eea;
             --secondary-color: #764ba2;
-            --bg-color: #f5f5f5;
+            --bg-color: #0a0e27;
+            --card-bg: #ffffff;
+            --text-dark: #1a1a2e;
+            --text-light: #6b7280;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: var(--bg-color);
+            color: var(--text-dark);
         }
 
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 2rem 1.5rem;
             position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .header h1 {
-            font-size: 1.5rem;
+            font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
         }
 
         .header p {
-            opacity: 0.9;
-            font-size: 0.9rem;
+            opacity: 0.95;
+            font-size: 1.1rem;
+            font-weight: 300;
         }
 
         .admin-toggle {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
             cursor: pointer;
             font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 10;
         }
 
         .admin-toggle:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .login-overlay {
@@ -65,10 +96,17 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
             z-index: 10000;
             justify-content: center;
             align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .login-overlay.active {
@@ -77,32 +115,55 @@
 
         .login-box {
             background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            max-width: 400px;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            max-width: 440px;
             width: 90%;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-box h2 {
-            margin-bottom: 1.5rem;
-            color: #333;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            font-size: 1.8rem;
         }
 
         .login-box input {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
             margin-bottom: 1rem;
             font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .login-box .error {
-            color: #dc3545;
+            color: #ef4444;
             font-size: 0.9rem;
             margin-bottom: 1rem;
             display: none;
+            padding: 0.75rem;
+            background: #fef2f2;
+            border-radius: 8px;
         }
 
         .login-box .error.show {
@@ -112,33 +173,39 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 2rem 1rem;
+            background: #f8fafc;
+            min-height: 100vh;
         }
 
         .tabs {
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
             background: white;
-            padding: 0.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 0.75rem;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             flex-wrap: wrap;
         }
 
         .tab {
-            padding: 0.75rem 1.5rem;
+            padding: 0.875rem 1.75rem;
             border: none;
             background: transparent;
             cursor: pointer;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: all 0.3s;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            color: var(--text-light);
         }
 
         .tab.active {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
         }
 
         .tab.admin-only {
@@ -146,7 +213,8 @@
         }
 
         .tab:hover:not(.active) {
-            background: #f0f0f0;
+            background: #f3f4f6;
+            color: var(--text-dark);
         }
 
         .tab-content {
@@ -155,21 +223,30 @@
 
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.4s ease;
         }
 
         .search-panel {
             background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 1rem;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .search-panel h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            font-weight: 700;
         }
 
         .search-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-group {
@@ -178,236 +255,349 @@
         }
 
         label {
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #333;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         input, select, textarea {
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 0.95rem;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         button {
-            padding: 0.75rem 1.5rem;
+            padding: 1rem 2rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
         .btn-secondary {
-            background: #6c757d;
+            background: #6b7280;
             color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
         }
 
         .btn-danger {
-            background: #dc3545;
+            background: #ef4444;
             color: white;
         }
 
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
         #map {
-            height: 500px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 1rem;
+            height: 550px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            overflow: hidden;
         }
 
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
         }
 
         .provider-card {
             background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .provider-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
         .provider-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .provider-card:hover::before {
+            transform: scaleX(1);
         }
 
         .provider-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
 
         .provider-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #333;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.3;
         }
 
         .price-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .price-budget {
-            background: #d4edda;
-            color: #155724;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
         }
 
         .price-mid-range {
-            background: #fff3cd;
-            color: #856404;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
         }
 
         .price-premium {
-            background: #f8d7da;
-            color: #721c24;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
         }
 
         .rating {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #fef3c7;
+            border-radius: 12px;
+            width: fit-content;
         }
 
         .stars {
-            color: #ffc107;
+            color: #f59e0b;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .rating span {
+            font-weight: 700;
+            color: var(--text-dark);
             font-size: 1.1rem;
         }
 
         .provider-info {
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.8;
         }
 
         .provider-info div {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: start;
+            gap: 0.5rem;
+        }
+
+        .provider-info strong {
+            color: var(--text-dark);
         }
 
         .services-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 0.6rem;
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid #e5e7eb;
         }
 
         .service-tag {
-            background: #e9ecef;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
             font-size: 0.85rem;
-            color: #495057;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .service-tag:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transform: translateY(-2px);
         }
 
         .admin-form {
             background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             margin-bottom: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .admin-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            font-weight: 700;
         }
 
         .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .providers-list {
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .provider-item {
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
+            padding: 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.3s ease;
         }
 
         .provider-item:hover {
-            background: #f8f9fa;
+            background: #f9fafb;
+            padding-left: 2rem;
+        }
+
+        .provider-item:last-child {
+            border-bottom: none;
         }
 
         .provider-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
         .btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
+            padding: 0.6rem 1.25rem;
+            font-size: 0.875rem;
         }
 
         .export-section {
             background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 1rem;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .export-section h3 {
             margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
         .no-results {
             text-align: center;
-            padding: 3rem;
-            color: #666;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+            font-size: 1.1rem;
         }
 
         .category-manager {
             background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 1rem;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .category-manager h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
         .category-list {
             display: grid;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
         }
 
         .category-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.75rem;
-            background: #f8f9fa;
-            border-radius: 6px;
+            padding: 1.25rem;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transform: translateX(4px);
         }
 
         @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
             .search-grid {
                 grid-template-columns: 1fr;
             }
@@ -419,8 +609,20 @@
             .admin-toggle {
                 position: static;
                 display: block;
-                margin-top: 1rem;
+                margin-top: 1.5rem;
                 width: 100%;
+            }
+
+            .container {
+                padding: 1rem 0.75rem;
+            }
+
+            .search-panel, .admin-form, .category-manager {
+                padding: 1.5rem;
+            }
+
+            #map {
+                height: 400px;
             }
         }
     </style>
@@ -429,26 +631,27 @@
     <!-- Login Overlay -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
-            <h2>Admin Access</h2>
-            <p style="color: #666; margin-bottom: 1.5rem;">Enter your admin password to manage the app</p>
+            <h2>🔐 Admin Access</h2>
+            <p style="color: #6b7280; margin-bottom: 1.5rem;">Enter your admin password to manage the app</p>
             <input type="password" id="adminPassword" placeholder="Enter password">
-            <div class="error" id="loginError">Incorrect password</div>
+            <div class="error" id="loginError">❌ Incorrect password</div>
             <div style="display: flex; gap: 1rem;">
                 <button class="btn-primary" onclick="checkAdminPassword()">Login</button>
                 <button class="btn-secondary" onclick="closeLogin()">Cancel</button>
             </div>
-            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;">
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;"><strong>First time?</strong></p>
-                <p style="font-size: 0.85rem; color: #666;">Set your admin password:</p>
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #f3f4f6;">
+                <p style="font-size: 0.95rem; color: #6b7280; margin-bottom: 0.75rem; font-weight: 600;">First time? Set your password</p>
                 <input type="password" id="newAdminPassword" placeholder="Create admin password" style="margin-top: 0.5rem;">
-                <button class="btn-primary" style="width: 100%; margin-top: 0.5rem;" onclick="setAdminPassword()">Set Password</button>
+                <button class="btn-primary" style="width: 100%; margin-top: 0.75rem;" onclick="setAdminPassword()">Set Password</button>
             </div>
         </div>
     </div>
 
     <div class="header">
-        <h1 id="appTitle">🚗 Lusaka Auto Services Finder</h1>
-        <p id="appTagline">Find the right mechanic for your vehicle and budget</p>
+        <div class="header-content">
+            <h1 id="appTitle">🚗 Lusaka Auto Services Finder</h1>
+            <p id="appTagline">Find the right mechanic for your vehicle and budget</p>
+        </div>
         <button class="admin-toggle" onclick="toggleAdmin()">
             <span id="adminButtonText">Admin Login</span>
         </button>
@@ -458,15 +661,15 @@
         <div class="tabs">
             <button class="tab active" onclick="switchTab('search')">🔍 Find Services</button>
             <button class="tab admin-only" onclick="switchTab('admin')">⚙️ Manage Providers</button>
-            <button class="tab admin-only" onclick="switchTab('categories')">📋 Manage Categories</button>
-            <button class="tab admin-only" onclick="switchTab('branding')">🎨 App Settings</button>
-            <button class="tab admin-only" onclick="switchTab('data')">💾 Data Management</button>
+            <button class="tab admin-only" onclick="switchTab('categories')">📋 Categories</button>
+            <button class="tab admin-only" onclick="switchTab('branding')">🎨 Settings</button>
+            <button class="tab admin-only" onclick="switchTab('data')">💾 Data</button>
         </div>
 
         <!-- SEARCH TAB -->
         <div id="search-tab" class="tab-content active">
             <div class="search-panel">
-                <h3 style="margin-bottom: 1rem;">What service do you need?</h3>
+                <h3>🔎 What service do you need?</h3>
                 <div class="search-grid">
                     <div class="form-group">
                         <label>Service Type</label>
@@ -486,11 +689,11 @@
                         <select id="areaFilter"></select>
                     </div>
                     <div class="form-group">
-                        <label>Vehicle Make (Optional)</label>
+                        <label>Vehicle Make</label>
                         <input type="text" id="vehicleMake" placeholder="e.g., Toyota, Nissan">
                     </div>
                 </div>
-                <button class="btn-primary" onclick="searchProviders()">Search</button>
+                <button class="btn-primary" onclick="searchProviders()">🚀 Search Now</button>
             </div>
 
             <div id="map"></div>
@@ -501,7 +704,7 @@
         <!-- ADMIN TAB -->
         <div id="admin-tab" class="tab-content">
             <div class="admin-form">
-                <h3 style="margin-bottom: 1.5rem;">Add New Service Provider</h3>
+                <h3>Add New Service Provider</h3>
                 <form id="providerForm" onsubmit="saveProvider(event)">
                     <div class="form-row">
                         <div class="form-group">
@@ -537,6 +740,14 @@
                             <input type="number" step="0.000001" id="longitude" required placeholder="28.2833">
                         </div>
                     </div>
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label>🔍 Auto-Find Location (Optional)</label>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <input type="text" id="locationSearch" placeholder="Enter business address or area (e.g., 'Cairo Road, Lusaka' or 'Kabulonga Shopping Center')">
+                            <button type="button" class="btn-secondary" onclick="findLocation()" style="white-space: nowrap;">📍 Find</button>
+                        </div>
+                        <small style="color: #6b7280; margin-top: 0.5rem; display: block;">This will automatically fill in the latitude and longitude fields above</small>
+                    </div>
                     <div class="form-group">
                         <label>Street Address</label>
                         <input type="text" id="streetAddress">
@@ -546,12 +757,13 @@
                         <textarea id="description" rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Services Offered (select multiple, hold Ctrl/Cmd)</label>
+                        <label>Services Offered (select multiple)</label>
                         <select id="services" multiple size="6"></select>
                     </div>
                     <div class="form-group">
-                        <label>Vehicle Specializations (comma separated)</label>
-                        <input type="text" id="specializations" placeholder="Toyota, Nissan, Honda">
+                        <label>Vehicle Specializations</label>
+                        <input type="text" id="specializations" placeholder="Toyota, Nissan, Honda (or leave blank for all vehicles)">
+                        <small style="color: #6b7280; margin-top: 0.5rem;">Comma separated. Leave blank if they work on ALL vehicles.</small>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
@@ -563,15 +775,15 @@
                             <input type="number" id="yearsInBusiness" min="0">
                         </div>
                     </div>
-                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                        <button type="submit" class="btn-primary">Save Provider</button>
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="submit" class="btn-primary">💾 Save Provider</button>
                         <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
                     </div>
                 </form>
             </div>
 
             <div class="providers-list">
-                <h3 style="padding: 1rem; background: #f8f9fa;">Existing Providers</h3>
+                <h3 style="padding: 1.5rem; background: #f9fafb; font-weight: 700;">Existing Providers</h3>
                 <div id="providersList"></div>
             </div>
         </div>
@@ -580,7 +792,7 @@
         <div id="categories-tab" class="tab-content">
             <div class="category-manager">
                 <h3>Manage Service Categories</h3>
-                <p style="color: #666; margin-bottom: 1.5rem;">Add, edit, or remove service categories</p>
+                <p style="color: #6b7280; margin-bottom: 2rem;">Add, edit, or remove service categories</p>
                 
                 <div class="form-row">
                     <div class="form-group">
@@ -597,13 +809,13 @@
                     <button class="btn-secondary" onclick="resetCategoryForm()">Clear</button>
                 </div>
 
-                <h4 style="margin-bottom: 1rem;">Current Categories</h4>
+                <h4 style="margin-bottom: 1rem; font-weight: 700;">Current Categories</h4>
                 <div id="categoryList" class="category-list"></div>
             </div>
 
             <div class="category-manager">
                 <h3>Manage Areas/Locations</h3>
-                <p style="color: #666; margin-bottom: 1.5rem;">Add areas where service providers are located</p>
+                <p style="color: #6b7280; margin-bottom: 2rem;">Add areas where service providers are located</p>
                 
                 <div class="form-group" style="margin-bottom: 1rem;">
                     <label>Area Name *</label>
@@ -614,7 +826,7 @@
                     <button class="btn-secondary" onclick="document.getElementById('areaName').value = ''">Clear</button>
                 </div>
 
-                <h4 style="margin-bottom: 1rem;">Current Areas</h4>
+                <h4 style="margin-bottom: 1rem; font-weight: 700;">Current Areas</h4>
                 <div id="areaList" class="category-list"></div>
             </div>
         </div>
@@ -622,7 +834,7 @@
         <!-- BRANDING TAB -->
         <div id="branding-tab" class="tab-content">
             <div class="admin-form">
-                <h3 style="margin-bottom: 1.5rem;">App Branding & Settings</h3>
+                <h3>App Branding & Settings</h3>
                 
                 <div class="form-group" style="margin-bottom: 1.5rem;">
                     <label>App Title</label>
@@ -637,10 +849,10 @@
                 <div class="form-group" style="margin-bottom: 1.5rem;">
                     <label>App Icon/Emoji</label>
                     <input type="text" id="brandAppIcon" placeholder="e.g., 🚗" maxlength="2">
-                    <small style="color: #666; margin-top: 0.5rem;">Enter an emoji or leave blank</small>
+                    <small style="color: #6b7280; margin-top: 0.5rem;">Enter an emoji or leave blank</small>
                 </div>
 
-                <h4 style="margin: 2rem 0 1rem 0;">Color Scheme</h4>
+                <h4 style="margin: 2rem 0 1rem 0; font-weight: 700;">Color Scheme</h4>
                 
                 <div class="form-row">
                     <div class="form-group">
@@ -659,11 +871,11 @@
                     </div>
                 </div>
 
-                <h4 style="margin: 2rem 0 1rem 0;">Admin Password</h4>
+                <h4 style="margin: 2rem 0 1rem 0; font-weight: 700;">Admin Password</h4>
                 <div class="form-group" style="margin-bottom: 1rem;">
                     <label>Change Admin Password</label>
                     <input type="password" id="changeAdminPassword" placeholder="Enter new password">
-                    <button class="btn-secondary" style="margin-top: 0.5rem;" onclick="changePassword()">Update Password</button>
+                    <button class="btn-secondary" style="margin-top: 0.75rem;" onclick="changePassword()">Update Password</button>
                 </div>
 
                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
@@ -676,8 +888,8 @@
         <!-- DATA MANAGEMENT TAB -->
         <div id="data-tab" class="tab-content">
             <div class="export-section">
-                <h3>Export / Import Data</h3>
-                <p style="margin-bottom: 1.5rem; color: #666;">Backup your data or transfer it to another browser</p>
+                <h3>💾 Export / Import Data</h3>
+                <p style="margin-bottom: 2rem; color: #6b7280;">Backup your data or transfer it to another browser</p>
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <button class="btn-primary" onclick="exportData()">📥 Export All Data</button>
                     <button class="btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import Data</button>
@@ -874,6 +1086,48 @@
             }).addTo(map);
         }
 
+        async function findLocation() {
+            const searchQuery = document.getElementById('locationSearch').value.trim();
+            
+            if (!searchQuery) {
+                alert('Please enter an address or location to search');
+                return;
+            }
+
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '⏳ Searching...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery + ', Lusaka, Zambia')}&limit=1`
+                );
+                
+                const data = await response.json();
+
+                if (data && data.length > 0) {
+                    const location = data[0];
+                    document.getElementById('latitude').value = parseFloat(location.lat).toFixed(6);
+                    document.getElementById('longitude').value = parseFloat(location.lon).toFixed(6);
+                    
+                    if (!document.getElementById('streetAddress').value) {
+                        document.getElementById('streetAddress').value = location.display_name.split(',')[0];
+                    }
+                    
+                    alert(`✅ Location found!\n📍 ${location.display_name}`);
+                } else {
+                    alert('❌ Location not found. Please try:\n• Adding more details (e.g., "Cairo Road, CBD, Lusaka")\n• Using area names\n• Or enter coordinates manually');
+                }
+            } catch (error) {
+                alert('Error finding location. Please check your internet connection or enter coordinates manually.');
+                console.error('Geocoding error:', error);
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
         function switchTab(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -1001,9 +1255,9 @@
                 <div class="category-item">
                     <div>
                         <strong>${c.name}</strong>
-                        ${c.description ? `<br><small style="color: #666;">${c.description}</small>` : ''}
+                        ${c.description ? `<br><small style="color: #6b7280;">${c.description}</small>` : ''}
                     </div>
-                    <div style="display: flex; gap: 0.5rem;">
+                    <div style="display: flex; gap: 0.75rem;">
                         <button class="btn-secondary btn-small" onclick="editCategory(${c.id})">Edit</button>
                         <button class="btn-danger btn-small" onclick="deleteCategory(${c.id})">Delete</button>
                     </div>
@@ -1142,8 +1396,8 @@
             container.innerHTML = providers.map(p => `
                 <div class="provider-item">
                     <div>
-                        <strong>${p.businessName}</strong><br>
-                        <small>${p.area} • ${p.phoneNumber}</small>
+                        <strong style="font-size: 1.05rem;">${p.businessName}</strong><br>
+                        <small style="color: #6b7280;">${p.area} • ${p.phoneNumber}</small>
                     </div>
                     <div class="provider-actions">
                         <button class="btn-secondary btn-small" onclick="editProvider(${p.id})">Edit</button>
@@ -1168,15 +1422,10 @@
                 if (budgetRange && p.priceRange !== budgetRange) return false;
                 if (area && p.area !== area) return false;
                 
-                // Vehicle make filter - if user enters vehicle, check if provider has ANY specializations
-                // If provider has no specializations, they work on all vehicles (show them)
-                // If provider has specializations, check if it matches
                 if (vehicleMake) {
                     if (!p.specializations || p.specializations.length === 0) {
-                        // Provider works on all vehicles
                         return true;
                     }
-                    // Check if any specialization matches
                     const matches = p.specializations.some(s => 
                         s.toLowerCase().trim().includes(vehicleMake) || 
                         vehicleMake.includes(s.toLowerCase().trim())
@@ -1205,7 +1454,7 @@
 
             const resultsDiv = document.getElementById('results');
             if (filtered.length === 0) {
-                resultsDiv.innerHTML = '<div class="no-results">No providers found matching your criteria. Try adjusting your filters.</div>';
+                resultsDiv.innerHTML = '<div class="no-results">😔 No providers found matching your criteria.<br>Try adjusting your filters.</div>';
                 return;
             }
 
@@ -1223,8 +1472,8 @@
                         <div>📍 ${p.area}${p.streetAddress ? ', ' + p.streetAddress : ''}</div>
                         <div>📞 ${p.phoneNumber}</div>
                         ${p.yearsInBusiness ? `<div>🏆 ${p.yearsInBusiness} years in business</div>` : ''}
-                        ${p.description ? `<div style="margin-top: 0.5rem;">${p.description}</div>` : ''}
-                        ${p.specializations.length ? `<div style="margin-top: 0.5rem;"><strong>Specializes in:</strong> ${p.specializations.join(', ')}</div>` : ''}
+                        ${p.description ? `<div style="margin-top: 0.75rem;">${p.description}</div>` : ''}
+                        ${p.specializations.length ? `<div style="margin-top: 0.75rem;"><strong>Specializes in:</strong> ${p.specializations.join(', ')}</div>` : '<div style="margin-top: 0.75rem; color: #10b981;"><strong>✓ Works on all vehicles</strong></div>'}
                     </div>
                     ${p.services.length ? `
                         <div class="services-tags">
@@ -1314,4 +1563,4 @@
         }
     </script>
 </body>
-                                                                                        </html>
+    </html>
