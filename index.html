@@ -7,49 +7,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --primary-color: #667eea;
             --secondary-color: #764ba2;
-            --bg-color: #0a0e27;
-            --card-bg: #ffffff;
             --text-dark: #1a1a2e;
             --text-light: #6b7280;
         }
 
         body {
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-color);
+            background: #0a0e27;
             color: var(--text-dark);
         }
 
+        /* Hero Section with Full-Width Design */
         .hero-section {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            padding: 4rem 1.5rem;
+            padding: 5rem 2rem;
             position: relative;
             overflow: hidden;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .hero-section::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            inset: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
             animation: pulse 8s ease-in-out infinite;
         }
 
@@ -58,30 +45,21 @@
             50% { opacity: 1; }
         }
 
-        .floating-cars {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
+        /* Floating Car Animations */
+        .floating-cars { position: absolute; width: 100%; height: 100%; overflow: hidden; }
         .car-icon {
             position: absolute;
             font-size: 2rem;
             opacity: 0.1;
-            animation: float 20s infinite;
+            animation: float 20s infinite linear;
         }
 
         @keyframes float {
-            0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px) rotate(360deg);
-            }
+            0% { transform: translateY(100vh) translateX(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); }
         }
 
-        .car-icon:nth-child(1) { left: 10%; animation-duration: 25s; animation-delay: 0s; }
+        .car-icon:nth-child(1) { left: 10%; animation-duration: 25s; }
         .car-icon:nth-child(2) { left: 30%; animation-duration: 20s; animation-delay: 3s; }
         .car-icon:nth-child(3) { left: 50%; animation-duration: 22s; animation-delay: 6s; }
         .car-icon:nth-child(4) { left: 70%; animation-duration: 24s; animation-delay: 2s; }
@@ -90,35 +68,29 @@
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            max-width: 1400px;
+            margin: 0 auto;
             text-align: center;
         }
 
         .logo-container {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             animation: slideDown 1s ease-out;
         }
 
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .logo {
-            font-size: 5rem;
+            font-size: 5.5rem;
             font-weight: 800;
             letter-spacing: -2px;
             background: linear-gradient(to right, #fff, #e0e7ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 40px rgba(255,255,255,0.3);
             display: inline-block;
             animation: glow 3s ease-in-out infinite;
         }
@@ -129,7 +101,7 @@
         }
 
         .logo-icon {
-            font-size: 6rem;
+            font-size: 7rem;
             display: block;
             margin-bottom: 1rem;
             animation: bounce 2s ease-in-out infinite;
@@ -141,9 +113,9 @@
         }
 
         .tagline {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 300;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             opacity: 0.95;
             animation: fadeIn 1.5s ease-out 0.3s both;
         }
@@ -155,19 +127,19 @@
 
         .feature-pills {
             display: flex;
-            gap: 1rem;
+            gap: 1.25rem;
             justify-content: center;
             flex-wrap: wrap;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             animation: fadeIn 1.5s ease-out 0.6s both;
         }
 
         .pill {
             background: rgba(255,255,255,0.2);
             backdrop-filter: blur(10px);
-            padding: 0.75rem 1.5rem;
+            padding: 0.875rem 1.75rem;
             border-radius: 50px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 500;
             border: 1px solid rgba(255,255,255,0.3);
             transition: all 0.3s ease;
@@ -178,43 +150,94 @@
             transform: translateY(-2px);
         }
 
-        .cta-section {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.2);
-            max-width: 800px;
+        /* Info Section - Full Width Content */
+        .info-section {
+            background: white;
+            padding: 5rem 2rem;
+        }
+
+        .info-content {
+            max-width: 1400px;
             margin: 0 auto;
-            animation: fadeIn 1.5s ease-out 0.9s both;
         }
 
-        .cta-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        .main-description {
+            text-align: center;
+            margin: 0 auto 4rem;
+        }
+
+        .main-description h2 {
+            font-size: 2.5rem;
             font-weight: 700;
-        }
-
-        .cta-section p {
-            font-size: 1.1rem;
-            line-height: 1.8;
             margin-bottom: 1.5rem;
-            opacity: 0.9;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
+        .main-description p {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+            border-radius: 20px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+        }
+
+        .info-card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .info-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .info-card p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        /* Hidden Admin Button - Bottom Right Corner */
         .admin-toggle {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+            bottom: 1.5rem;
+            right: 1.5rem;
             background: rgba(102, 126, 234, 0.1);
             backdrop-filter: blur(10px);
             border: 2px solid rgba(102, 126, 234, 0.2);
             color: var(--primary-color);
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             transition: all 0.3s ease;
             z-index: 1000;
             display: flex;
@@ -235,24 +258,19 @@
             color: #10b981;
         }
 
+        /* Login Modal */
         .login-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            inset: 0;
             background: rgba(0,0,0,0.8);
             backdrop-filter: blur(8px);
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            animation: fadeIn 0.3s ease;
         }
 
-        .login-overlay.active {
-            display: flex;
-        }
+        .login-overlay.active { display: flex; }
 
         .login-box {
             background: white;
@@ -265,19 +283,12 @@
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .login-box h2 {
             margin-bottom: 1rem;
-            color: var(--text-dark);
             font-size: 1.8rem;
         }
 
@@ -288,7 +299,7 @@
             border-radius: 12px;
             margin-bottom: 1rem;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
         }
 
         .login-box input:focus {
@@ -307,10 +318,9 @@
             border-radius: 8px;
         }
 
-        .login-box .error.show {
-            display: block;
-        }
+        .login-box .error.show { display: block; }
 
+        /* Main Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -319,6 +329,7 @@
             min-height: 100vh;
         }
 
+        /* Tabs */
         .tabs {
             display: flex;
             gap: 0.75rem;
@@ -340,6 +351,7 @@
             font-size: 0.95rem;
             transition: all 0.3s ease;
             color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
         }
 
         .tab.active {
@@ -349,47 +361,17 @@
             transform: translateY(-2px);
         }
 
-        .tab.admin-only {
-            display: none;
-        }
+        .tab.admin-only { display: none; }
 
         .tab:hover:not(.active) {
             background: #f3f4f6;
             color: var(--text-dark);
         }
 
-        .tab-content {
-            display: none;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .search-panel {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .search-panel h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-dark);
-            font-weight: 700;
-        }
-
-        .search-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
+        /* Forms and Inputs */
         .form-group {
             display: flex;
             flex-direction: column;
@@ -442,10 +424,6 @@
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
         .btn-secondary {
             background: #6b7280;
             color: white;
@@ -466,6 +444,35 @@
             transform: translateY(-2px);
         }
 
+        .btn-small {
+            padding: 0.6rem 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        /* Search Panel */
+        .search-panel {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .search-panel h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Map */
         #map {
             height: 550px;
             border-radius: 20px;
@@ -475,6 +482,7 @@
             overflow: hidden;
         }
 
+        /* Provider Cards */
         .results-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -523,7 +531,6 @@
         .provider-name {
             font-size: 1.35rem;
             font-weight: 700;
-            color: var(--text-dark);
             line-height: 1.3;
         }
 
@@ -570,7 +577,6 @@
 
         .rating span {
             font-weight: 700;
-            color: var(--text-dark);
             font-size: 1.1rem;
         }
 
@@ -582,13 +588,6 @@
 
         .provider-info div {
             margin-bottom: 0.6rem;
-            display: flex;
-            align-items: start;
-            gap: 0.5rem;
-        }
-
-        .provider-info strong {
-            color: var(--text-dark);
         }
 
         .services-tags {
@@ -605,7 +604,6 @@
             padding: 0.4rem 1rem;
             border-radius: 50px;
             font-size: 0.85rem;
-            color: var(--text-dark);
             font-weight: 600;
             transition: all 0.3s ease;
         }
@@ -616,6 +614,7 @@
             transform: translateY(-2px);
         }
 
+        /* Admin Forms */
         .admin-form {
             background: white;
             padding: 2.5rem;
@@ -628,7 +627,6 @@
         .admin-form h3 {
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            color: var(--text-dark);
             font-weight: 700;
         }
 
@@ -670,34 +668,6 @@
             gap: 0.75rem;
         }
 
-        .btn-small {
-            padding: 0.6rem 1.25rem;
-            font-size: 0.875rem;
-        }
-
-        .export-section {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-bottom: 2rem;
-            text-align: center;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .export-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
         .category-manager {
             background: white;
             padding: 2.5rem;
@@ -736,67 +706,50 @@
             transform: translateX(4px);
         }
 
+        .export-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .export-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
         @media (max-width: 768px) {
-            .logo {
-                font-size: 3rem;
-            }
-
-            .logo-icon {
-                font-size: 4rem;
-            }
-
-            .tagline {
-                font-size: 1.1rem;
-            }
-
-            .cta-section h2 {
-                font-size: 1.5rem;
-            }
-
-            .cta-section p {
-                font-size: 1rem;
-            }
-
-            .hero-section {
-                padding: 3rem 1rem;
-                min-height: auto;
-            }
-
-            .search-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .results-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .admin-toggle {
-                position: static;
-                display: block;
-                margin-top: 1.5rem;
-                width: 100%;
-            }
-
-            .container {
-                padding: 1rem 0.75rem;
-            }
-
-            .search-panel, .admin-form, .category-manager {
-                padding: 1.5rem;
-            }
-
-            #map {
-                height: 400px;
-            }
+            .logo { font-size: 3.5rem; }
+            .logo-icon { font-size: 5rem; }
+            .tagline { font-size: 1.2rem; }
+            .main-description h2 { font-size: 1.8rem; }
+            .main-description p { font-size: 1.05rem; }
+            .hero-section { padding: 3rem 1rem; }
+            .info-section { padding: 3rem 1rem; }
+            .search-grid, .results-grid { grid-template-columns: 1fr; }
+            .container { padding: 1rem 0.75rem; }
+            .search-panel, .admin-form, .category-manager { padding: 1.5rem; }
+            #map { height: 400px; }
         }
     </style>
 </head>
 <body>
-    <!-- Login Overlay -->
+    <!-- Login Modal -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
             <h2>🔐 Admin Access</h2>
-            <p style="color: #6b7280; margin-bottom: 1.5rem;">Enter your admin password to manage the app</p>
+            <p style="color: #6b7280; margin-bottom: 1.5rem;">Enter your admin password</p>
             <input type="password" id="adminPassword" placeholder="Enter password">
             <div class="error" id="loginError">❌ Incorrect password</div>
             <div style="display: flex; gap: 1rem;">
@@ -811,6 +764,7 @@
         </div>
     </div>
 
+    <!-- Hero Section -->
     <div class="hero-section">
         <div class="floating-cars">
             <div class="car-icon">🚗</div>
@@ -834,82 +788,42 @@
                 <div class="pill">⭐ Read Reviews</div>
                 <div class="pill">📍 Find Nearby</div>
             </div>
-
-            <div class="cta-section">
-                <h2>Welcome to AutoHive</h2>
-                <p>
-                    Finding a trustworthy mechanic shouldn't be a gamble. AutoHive connects you with vetted auto service providers across Lusaka, from budget-friendly garages to premium workshops. Whether you need an oil change, engine repair, or complete vehicle restoration, we help you find the right specialist for your needs and budget.
-                </p>
-                <p style="font-size: 0.95rem; opacity: 0.8; margin: 0;">
-                    🎯 Filter by service type • 💵 Choose your budget • 🚗 Match your vehicle • 📱 Book with confidence
-                </p>
-            </div>
         </div>
-
-        <button class="admin-toggle" onclick="toggleAdmin()" title="Admin">
-            <span id="adminIcon">🔒</span>
-        </button>
     </div>
 
-    <div class="container">
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('search')">🔍 Find Services</button>
-            <button class="tab admin-only" onclick="switchTab('admin')">⚙️ Manage Providers</button>
-            <button class="tab admin-only" onclick="switchTab('categories')">📋 Categories</button>
-            <button class="tab admin-only" onclick="switchTab('branding')">🎨 Settings</button>
-            <button class="tab admin-only" onclick="switchTab('data')">💾 Data</button>
-        </div>
-
-        <!-- SEARCH TAB -->
-        <div id="search-tab" class="tab-content active">
-            <div class="search-panel">
-                <h3>🔎 What service do you need?</h3>
-                <div class="search-grid">
-                    <div class="form-group">
-                        <label>Service Type</label>
-                        <select id="serviceType"></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Budget Range</label>
-                        <select id="budgetRange">
-                            <option value="">Any Budget</option>
-                            <option value="budget">Budget Friendly</option>
-                            <option value="mid-range">Mid Range</option>
-                            <option value="premium">Premium</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Area</label>
-                        <select id="areaFilter"></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Vehicle Make</label>
-                        <input type="text" id="vehicleMake" placeholder="e.g., Toyota, Nissan">
-                    </div>
-                </div>
-                <button class="btn-primary" onclick="searchProviders()">🚀 Search Now</button>
+    <!-- Info Section -->
+    <div class="info-section">
+        <div class="info-content">
+            <div class="main-description">
+                <h2>Welcome to AutoHive</h2>
+                <p>
+                    Finding a trustworthy mechanic shouldn't be a gamble. AutoHive is Lusaka's premier platform connecting vehicle owners with verified auto service providers across the city. Whether you're driving a budget-friendly sedan or a luxury SUV, we help you discover the perfect garage for your needs.
+                </p>
+                <p>
+                    From routine oil changes to complete engine overhauls, brake repairs to bodywork restoration, our comprehensive directory features auto service specialists throughout Lusaka. Filter by location, compare prices, read authentic reviews, and make informed decisions—all in one place.
+                </p>
             </div>
 
-            <div id="map"></div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <span class="info-card-icon">🔍</span>
+                    <h3>Easy Search</h3>
+                    <p>Find exactly what you need with powerful filters. Search by service type, area, budget range, and vehicle make to discover the perfect match.</p>
+                </div>
 
-            <div id="results" class="results-grid"></div>
-        </div>
+                <div class="info-card">
+                    <span class="info-card-icon">⭐</span>
+                    <h3>Verified Reviews</h3>
+                    <p>Read authentic reviews from real customers. Make confident decisions based on experiences from fellow vehicle owners in Lusaka.</p>
+                </div>
 
-        <!-- ADMIN TAB -->
-        <div id="admin-tab" class="tab-content">
-            <div class="admin-form">
-                <h3>Add New Service Provider</h3>
-                <form id="providerForm" onsubmit="saveProvider(event)">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Business Name *</label>
-                            <input type="text" id="businessName" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number *</label>
-                            <input type="tel" id="phoneNumber" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Area
+                <div class="info-card">
+                    <span class="info-card-icon">💰</span>
+                    <h3>Compare Prices</h3>
+                    <p>Transparent pricing across all budget ranges. Whether you need budget-friendly service or premium expertise, find the right fit for your wallet.</p>
+                </div>
+
+                <div class="info-card">
+                    <span class="info-card-icon">📍</span>
+                    <h3>Location Based</h3>
+                    <p
