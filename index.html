@@ -180,8 +180,9 @@
         /* Auto Hive Logo */
         .brand-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1rem;
             margin-bottom: 1.5rem;
         }
 
@@ -251,6 +252,7 @@
         .brand-text {
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
         .brand-name {
@@ -277,6 +279,9 @@
             padding: 1.5rem;
             margin-top: 1.5rem;
             max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
         }
 
         .app-description h3 {
@@ -865,8 +870,7 @@
 
         @media (max-width: 768px) {
             .brand-container {
-                flex-direction: column;
-                align-items: flex-start;
+                gap: 0.75rem;
             }
 
             .auto-hive-logo {
