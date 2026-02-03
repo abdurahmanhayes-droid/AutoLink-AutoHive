@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Services Finder</title>
+    <title>Auto Hive - Lusaka's Auto Services Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
     <style>
         * {
@@ -13,8 +13,9 @@
         }
 
         :root {
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
+            --primary-color: #f59e0b;
+            --secondary-color: #d97706;
+            --accent-color: #fbbf24;
             --bg-color: #0a0e27;
             --card-bg: #ffffff;
             --text-dark: #1a1a2e;
@@ -25,14 +26,137 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: var(--bg-color);
             color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* ===== CARWOW ANIMATED BACKGROUND ===== */
+        .carwow-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2a2f4a 100%);
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%);
+            bottom: -10%;
+            right: -10%;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(100px, -100px) scale(1.1);
+            }
+            66% {
+                transform: translate(-100px, 100px) scale(0.9);
+            }
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(245, 158, 11, 0.5);
+            border-radius: 50%;
+            animation: rise 15s infinite ease-in;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* ===== MAIN CONTENT WRAPPER ===== */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
         }
 
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            padding: 2rem 1.5rem;
+            padding: 2.5rem 1.5rem;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
         .header::before {
@@ -53,17 +177,145 @@
             margin: 0 auto;
         }
 
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
+        /* Auto Hive Logo */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .header p {
+        .auto-hive-logo {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #fff 0%, #fef3c7 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: logoPulse 3s infinite ease-in-out;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
+                transform: scale(1.02);
+            }
+        }
+
+        .honeycomb-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            padding: 12px;
+        }
+
+        .hex-cell {
+            background: var(--primary-color);
+            border-radius: 3px;
+            opacity: 0.8;
+        }
+
+        .hex-cell:nth-child(1) { opacity: 0.9; }
+        .hex-cell:nth-child(2) { opacity: 0.7; }
+        .hex-cell:nth-child(3) { opacity: 0.85; }
+        .hex-cell:nth-child(4) { opacity: 0.75; }
+        .hex-cell:nth-child(5) { 
+            opacity: 1; 
+            background: var(--secondary-color);
+            box-shadow: 0 0 8px rgba(217, 119, 6, 0.6);
+        }
+        .hex-cell:nth-child(6) { opacity: 0.8; }
+        .hex-cell:nth-child(7) { opacity: 0.85; }
+        .hex-cell:nth-child(8) { opacity: 0.7; }
+        .hex-cell:nth-child(9) { opacity: 0.9; }
+
+        .car-icon {
+            position: absolute;
+            font-size: 36px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-tagline {
+            font-size: 1rem;
             opacity: 0.95;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .app-description {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            max-width: 800px;
+        }
+
+        .app-description h3 {
             font-size: 1.1rem;
-            font-weight: 300;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .app-description p {
+            line-height: 1.6;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+        }
+
+        .app-description ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .app-description li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .app-description li::before {
+            content: '✓';
+            background: rgba(255, 255, 255, 0.2);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
         }
 
         .admin-toggle {
@@ -114,13 +366,15 @@
         }
 
         .login-box {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             padding: 2.5rem;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
             max-width: 440px;
             width: 90%;
             animation: slideUp 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         @keyframes slideUp {
@@ -148,12 +402,13 @@
             margin-bottom: 1rem;
             font-size: 1rem;
             transition: all 0.3s ease;
+            background: white;
         }
 
         .login-box input:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
         }
 
         .login-box .error {
@@ -174,19 +429,22 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 2rem 1rem;
-            background: #f8fafc;
+            background: transparent;
             min-height: 100vh;
+            position: relative;
         }
 
         .tabs {
             display: flex;
             gap: 0.75rem;
             margin-bottom: 2rem;
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             padding: 0.75rem;
             border-radius: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             flex-wrap: wrap;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .tab {
@@ -204,7 +462,7 @@
         .tab.active {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
             transform: translateY(-2px);
         }
 
@@ -213,7 +471,7 @@
         }
 
         .tab:hover:not(.active) {
-            background: #f3f4f6;
+            background: rgba(243, 244, 246, 0.8);
             color: var(--text-dark);
         }
 
@@ -227,12 +485,19 @@
         }
 
         .search-panel {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             padding: 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
             margin-bottom: 2rem;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .search-panel:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
         }
 
         .search-panel h3 {
@@ -275,7 +540,7 @@
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
         }
 
         button {
@@ -291,12 +556,12 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
         }
 
         .btn-primary:active {
@@ -326,9 +591,9 @@
         #map {
             height: 550px;
             border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             margin-bottom: 2rem;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             overflow: hidden;
         }
 
@@ -339,12 +604,13 @@
         }
 
         .provider-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
             transition: all 0.4s ease;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
         }
@@ -363,7 +629,7 @@
 
         .provider-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
         }
 
         .provider-card:hover::before {
@@ -474,12 +740,13 @@
         }
 
         .admin-form {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             padding: 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
             margin-bottom: 2rem;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .admin-form h3 {
@@ -497,16 +764,17 @@
         }
 
         .providers-list {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
             overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .provider-item {
             padding: 1.5rem;
-            border-bottom: 1px solid #f3f4f6;
+            border-bottom: 1px solid rgba(243, 244, 246, 0.8);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -514,7 +782,7 @@
         }
 
         .provider-item:hover {
-            background: #f9fafb;
+            background: rgba(249, 250, 251, 0.8);
             padding-left: 2rem;
         }
 
@@ -533,13 +801,14 @@
         }
 
         .export-section {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             padding: 3rem;
             border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
             margin-bottom: 2rem;
             text-align: center;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .export-section h3 {
@@ -556,12 +825,13 @@
         }
 
         .category-manager {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             padding: 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
             margin-bottom: 2rem;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .category-manager h3 {
@@ -581,21 +851,35 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.25rem;
-            background: #f9fafb;
+            background: rgba(249, 250, 251, 0.8);
             border-radius: 12px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid rgba(229, 231, 235, 0.8);
             transition: all 0.3s ease;
         }
 
         .category-item:hover {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             transform: translateX(4px);
         }
 
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.5rem;
+            .brand-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .auto-hive-logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .car-icon {
+                font-size: 28px;
+            }
+
+            .brand-name {
+                font-size: 2rem;
             }
 
             .search-grid {
@@ -624,278 +908,325 @@
             #map {
                 height: 400px;
             }
+
+            .app-description ul {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Login Overlay -->
-    <div class="login-overlay" id="loginOverlay">
-        <div class="login-box">
-            <h2>🔐 Admin Access</h2>
-            <p style="color: #6b7280; margin-bottom: 1.5rem;">Enter your admin password to manage the app</p>
-            <input type="password" id="adminPassword" placeholder="Enter password">
-            <div class="error" id="loginError">❌ Incorrect password</div>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn-primary" onclick="checkAdminPassword()">Login</button>
-                <button class="btn-secondary" onclick="closeLogin()">Cancel</button>
-            </div>
-            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #f3f4f6;">
-                <p style="font-size: 0.95rem; color: #6b7280; margin-bottom: 0.75rem; font-weight: 600;">First time? Set your password</p>
-                <input type="password" id="newAdminPassword" placeholder="Create admin password" style="margin-top: 0.5rem;">
-                <button class="btn-primary" style="width: 100%; margin-top: 0.75rem;" onclick="setAdminPassword()">Set Password</button>
-            </div>
-        </div>
+    <!-- Carwow Animated Background -->
+    <div class="carwow-background">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="grid-overlay"></div>
+        <div class="particles" id="particles"></div>
     </div>
 
-    <div class="header">
-        <div class="header-content">
-            <h1 id="appTitle">🚗 Lusaka Auto Services Finder</h1>
-            <p id="appTagline">Find the right mechanic for your vehicle and budget</p>
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- Login Overlay -->
+        <div class="login-overlay" id="loginOverlay">
+            <div class="login-box">
+                <h2>🔐 Admin Access</h2>
+                <p style="color: #6b7280; margin-bottom: 1.5rem;">Enter your admin password to manage the app</p>
+                <input type="password" id="adminPassword" placeholder="Enter password">
+                <div class="error" id="loginError">❌ Incorrect password</div>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn-primary" onclick="checkAdminPassword()">Login</button>
+                    <button class="btn-secondary" onclick="closeLogin()">Cancel</button>
+                </div>
+                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #f3f4f6;">
+                    <p style="font-size: 0.95rem; color: #6b7280; margin-bottom: 0.75rem; font-weight: 600;">First time? Set your password</p>
+                    <input type="password" id="newAdminPassword" placeholder="Create admin password" style="margin-top: 0.5rem;">
+                    <button class="btn-primary" style="width: 100%; margin-top: 0.75rem;" onclick="setAdminPassword()">Set Password</button>
+                </div>
+            </div>
         </div>
-        <button class="admin-toggle" onclick="toggleAdmin()">
-            <span id="adminButtonText">Admin Login</span>
-        </button>
-    </div>
 
-    <div class="container">
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('search')">🔍 Find Services</button>
-            <button class="tab admin-only" onclick="switchTab('admin')">⚙️ Manage Providers</button>
-            <button class="tab admin-only" onclick="switchTab('categories')">📋 Categories</button>
-            <button class="tab admin-only" onclick="switchTab('branding')">🎨 Settings</button>
-            <button class="tab admin-only" onclick="switchTab('data')">💾 Data</button>
-        </div>
-
-        <!-- SEARCH TAB -->
-        <div id="search-tab" class="tab-content active">
-            <div class="search-panel">
-                <h3>🔎 What service do you need?</h3>
-                <div class="search-grid">
-                    <div class="form-group">
-                        <label>Service Type</label>
-                        <select id="serviceType"></select>
+        <div class="header">
+            <div class="header-content">
+                <div class="brand-container">
+                    <div class="auto-hive-logo">
+                        <div class="honeycomb-grid">
+                            <div class="hex-cell"></div>
+                            <div class="hex-cell"></div>
+                            <div class="hex-cell"></div>
+                            <div class="hex-cell"></div>
+                            <div class="hex-cell"></div>
+                            <div class="hex-cell"></div>
+                            <div class="hex-cell"></div>
+                            <div class="hex-cell"></div>
+                            <div class="hex-cell"></div>
+                        </div>
+                        <div class="car-icon">🚗</div>
                     </div>
-                    <div class="form-group">
-                        <label>Budget Range</label>
-                        <select id="budgetRange">
-                            <option value="">Any Budget</option>
-                            <option value="budget">Budget Friendly</option>
-                            <option value="mid-range">Mid Range</option>
-                            <option value="premium">Premium</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Area</label>
-                        <select id="areaFilter"></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Vehicle Make</label>
-                        <input type="text" id="vehicleMake" placeholder="e.g., Toyota, Nissan">
+                    <div class="brand-text">
+                        <div class="brand-name">Auto Hive</div>
+                        <div class="brand-tagline">Lusaka's Auto Services Hub</div>
                     </div>
                 </div>
-                <button class="btn-primary" onclick="searchProviders()">🚀 Search Now</button>
+
+                <div class="app-description">
+                    <h3>🎯 Your Complete Auto Service Solution</h3>
+                    <p>Auto Hive connects you with trusted automotive service providers across Lusaka. Whether you need routine maintenance, emergency repairs, or specialized services, find the right professional for your vehicle in seconds.</p>
+                    <ul>
+                        <li>Search by service type & budget</li>
+                        <li>Compare ratings & prices</li>
+                        <li>Filter by location & specialty</li>
+                        <li>View on interactive map</li>
+                        <li>Direct contact information</li>
+                        <li>Trusted local providers</li>
+                    </ul>
+                </div>
             </div>
-
-            <div id="map"></div>
-
-            <div id="results" class="results-grid"></div>
+            <button class="admin-toggle" onclick="toggleAdmin()">
+                <span id="adminButtonText">Admin Login</span>
+            </button>
         </div>
 
-        <!-- ADMIN TAB -->
-        <div id="admin-tab" class="tab-content">
-            <div class="admin-form">
-                <h3>Add New Service Provider</h3>
-                <form id="providerForm" onsubmit="saveProvider(event)">
-                    <div class="form-row">
+        <div class="container">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('search')">🔍 Find Services</button>
+                <button class="tab admin-only" onclick="switchTab('admin')">⚙️ Manage Providers</button>
+                <button class="tab admin-only" onclick="switchTab('categories')">📋 Categories</button>
+                <button class="tab admin-only" onclick="switchTab('branding')">🎨 Settings</button>
+                <button class="tab admin-only" onclick="switchTab('data')">💾 Data</button>
+            </div>
+
+            <!-- SEARCH TAB -->
+            <div id="search-tab" class="tab-content active">
+                <div class="search-panel">
+                    <h3>🔎 What service do you need?</h3>
+                    <div class="search-grid">
                         <div class="form-group">
-                            <label>Business Name *</label>
-                            <input type="text" id="businessName" required>
+                            <label>Service Type</label>
+                            <select id="serviceType"></select>
                         </div>
                         <div class="form-group">
-                            <label>Phone Number *</label>
-                            <input type="tel" id="phoneNumber" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Area *</label>
-                            <select id="area" required></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Price Range *</label>
-                            <select id="priceRange" required>
+                            <label>Budget Range</label>
+                            <select id="budgetRange">
+                                <option value="">Any Budget</option>
                                 <option value="budget">Budget Friendly</option>
                                 <option value="mid-range">Mid Range</option>
                                 <option value="premium">Premium</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Area</label>
+                            <select id="areaFilter"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Vehicle Make</label>
+                            <input type="text" id="vehicleMake" placeholder="e.g., Toyota, Nissan">
+                        </div>
                     </div>
+                    <button class="btn-primary" onclick="searchProviders()">🚀 Search Now</button>
+                </div>
+
+                <div id="map"></div>
+
+                <div id="results" class="results-grid"></div>
+            </div>
+
+            <!-- ADMIN TAB -->
+            <div id="admin-tab" class="tab-content">
+                <div class="admin-form">
+                    <h3>Add New Service Provider</h3>
+                    <form id="providerForm" onsubmit="saveProvider(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Business Name *</label>
+                                <input type="text" id="businessName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number *</label>
+                                <input type="tel" id="phoneNumber" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Area *</label>
+                                <select id="area" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Price Range *</label>
+                                <select id="priceRange" required>
+                                    <option value="budget">Budget Friendly</option>
+                                    <option value="mid-range">Mid Range</option>
+                                    <option value="premium">Premium</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Latitude *</label>
+                                <input type="number" step="0.000001" id="latitude" required placeholder="-15.4167">
+                            </div>
+                            <div class="form-group">
+                                <label>Longitude *</label>
+                                <input type="number" step="0.000001" id="longitude" required placeholder="28.2833">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label>🔍 Auto-Find Location (Optional)</label>
+                            <div style="display: flex; gap: 0.75rem;">
+                                <input type="text" id="locationSearch" placeholder="Enter business address or area (e.g., 'Cairo Road, Lusaka' or 'Kabulonga Shopping Center')">
+                                <button type="button" class="btn-secondary" onclick="findLocation()" style="white-space: nowrap;">📍 Find</button>
+                            </div>
+                            <small style="color: #6b7280; margin-top: 0.5rem; display: block;">This will automatically fill in the latitude and longitude fields above</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Street Address</label>
+                            <input type="text" id="streetAddress">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Services Offered (select multiple)</label>
+                            <select id="services" multiple size="6"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Vehicle Specializations</label>
+                            <input type="text" id="specializations" placeholder="Toyota, Nissan, Honda (or leave blank for all vehicles)">
+                            <small style="color: #6b7280; margin-top: 0.5rem;">Comma separated. Leave blank if they work on ALL vehicles.</small>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Rating (1-5)</label>
+                                <input type="number" min="1" max="5" step="0.1" id="rating" value="4.0">
+                            </div>
+                            <div class="form-group">
+                                <label>Years in Business</label>
+                                <input type="number" id="yearsInBusiness" min="0">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                            <button type="submit" class="btn-primary">💾 Save Provider</button>
+                            <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="providers-list">
+                    <h3 style="padding: 1.5rem; background: rgba(249, 250, 251, 0.8); font-weight: 700;">Existing Providers</h3>
+                    <div id="providersList"></div>
+                </div>
+            </div>
+
+            <!-- CATEGORIES TAB -->
+            <div id="categories-tab" class="tab-content">
+                <div class="category-manager">
+                    <h3>Manage Service Categories</h3>
+                    <p style="color: #6b7280; margin-bottom: 2rem;">Add, edit, or remove service categories</p>
+                    
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Latitude *</label>
-                            <input type="number" step="0.000001" id="latitude" required placeholder="-15.4167">
+                            <label>Category Name *</label>
+                            <input type="text" id="categoryName" placeholder="e.g., Engine Repair">
                         </div>
                         <div class="form-group">
-                            <label>Longitude *</label>
-                            <input type="number" step="0.000001" id="longitude" required placeholder="28.2833">
+                            <label>Description</label>
+                            <input type="text" id="categoryDescription" placeholder="Brief description">
                         </div>
                     </div>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                        <button class="btn-primary" onclick="saveCategory()">Add Category</button>
+                        <button class="btn-secondary" onclick="resetCategoryForm()">Clear</button>
+                    </div>
+
+                    <h4 style="margin-bottom: 1rem; font-weight: 700;">Current Categories</h4>
+                    <div id="categoryList" class="category-list"></div>
+                </div>
+
+                <div class="category-manager">
+                    <h3>Manage Areas/Locations</h3>
+                    <p style="color: #6b7280; margin-bottom: 2rem;">Add areas where service providers are located</p>
+                    
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Area Name *</label>
+                        <input type="text" id="areaName" placeholder="e.g., Kabulonga, CBD">
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                        <button class="btn-primary" onclick="saveArea()">Add Area</button>
+                        <button class="btn-secondary" onclick="document.getElementById('areaName').value = ''">Clear</button>
+                    </div>
+
+                    <h4 style="margin-bottom: 1rem; font-weight: 700;">Current Areas</h4>
+                    <div id="areaList" class="category-list"></div>
+                </div>
+            </div>
+
+            <!-- BRANDING TAB -->
+            <div id="branding-tab" class="tab-content">
+                <div class="admin-form">
+                    <h3>App Branding & Settings</h3>
+                    
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <label>🔍 Auto-Find Location (Optional)</label>
-                        <div style="display: flex; gap: 0.75rem;">
-                            <input type="text" id="locationSearch" placeholder="Enter business address or area (e.g., 'Cairo Road, Lusaka' or 'Kabulonga Shopping Center')">
-                            <button type="button" class="btn-secondary" onclick="findLocation()" style="white-space: nowrap;">📍 Find</button>
-                        </div>
-                        <small style="color: #6b7280; margin-top: 0.5rem; display: block;">This will automatically fill in the latitude and longitude fields above</small>
+                        <label>App Title</label>
+                        <input type="text" id="brandAppTitle" placeholder="e.g., Auto Hive">
                     </div>
-                    <div class="form-group">
-                        <label>Street Address</label>
-                        <input type="text" id="streetAddress">
+
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label>App Tagline</label>
+                        <input type="text" id="brandAppTagline" placeholder="e.g., Lusaka's Auto Services Hub">
                     </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="description" rows="3"></textarea>
+
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label>App Icon/Emoji</label>
+                        <input type="text" id="brandAppIcon" placeholder="e.g., 🚗" maxlength="2">
+                        <small style="color: #6b7280; margin-top: 0.5rem;">Enter an emoji or leave blank</small>
                     </div>
-                    <div class="form-group">
-                        <label>Services Offered (select multiple)</label>
-                        <select id="services" multiple size="6"></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Vehicle Specializations</label>
-                        <input type="text" id="specializations" placeholder="Toyota, Nissan, Honda (or leave blank for all vehicles)">
-                        <small style="color: #6b7280; margin-top: 0.5rem;">Comma separated. Leave blank if they work on ALL vehicles.</small>
-                    </div>
+
+                    <h4 style="margin: 2rem 0 1rem 0; font-weight: 700;">Color Scheme</h4>
+                    
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Rating (1-5)</label>
-                            <input type="number" min="1" max="5" step="0.1" id="rating" value="4.0">
+                            <label>Primary Color</label>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <input type="color" id="brandPrimaryColor" style="width: 60px; height: 40px;">
+                                <input type="text" id="brandPrimaryColorHex" placeholder="#f59e0b" style="flex: 1;">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Years in Business</label>
-                            <input type="number" id="yearsInBusiness" min="0">
+                            <label>Secondary Color</label>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <input type="color" id="brandSecondaryColor" style="width: 60px; height: 40px;">
+                                <input type="text" id="brandSecondaryColorHex" placeholder="#d97706" style="flex: 1;">
+                            </div>
                         </div>
                     </div>
+
+                    <h4 style="margin: 2rem 0 1rem 0; font-weight: 700;">Admin Password</h4>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Change Admin Password</label>
+                        <input type="password" id="changeAdminPassword" placeholder="Enter new password">
+                        <button class="btn-secondary" style="margin-top: 0.75rem;" onclick="changePassword()">Update Password</button>
+                    </div>
+
                     <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="submit" class="btn-primary">💾 Save Provider</button>
-                        <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="providers-list">
-                <h3 style="padding: 1.5rem; background: #f9fafb; font-weight: 700;">Existing Providers</h3>
-                <div id="providersList"></div>
-            </div>
-        </div>
-
-        <!-- CATEGORIES TAB -->
-        <div id="categories-tab" class="tab-content">
-            <div class="category-manager">
-                <h3>Manage Service Categories</h3>
-                <p style="color: #6b7280; margin-bottom: 2rem;">Add, edit, or remove service categories</p>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Category Name *</label>
-                        <input type="text" id="categoryName" placeholder="e.g., Engine Repair">
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <input type="text" id="categoryDescription" placeholder="Brief description">
+                        <button class="btn-primary" onclick="saveBranding()">Save Settings</button>
+                        <button class="btn-secondary" onclick="resetBranding()">Reset to Default</button>
                     </div>
                 </div>
-                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-                    <button class="btn-primary" onclick="saveCategory()">Add Category</button>
-                    <button class="btn-secondary" onclick="resetCategoryForm()">Clear</button>
-                </div>
-
-                <h4 style="margin-bottom: 1rem; font-weight: 700;">Current Categories</h4>
-                <div id="categoryList" class="category-list"></div>
             </div>
 
-            <div class="category-manager">
-                <h3>Manage Areas/Locations</h3>
-                <p style="color: #6b7280; margin-bottom: 2rem;">Add areas where service providers are located</p>
-                
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label>Area Name *</label>
-                    <input type="text" id="areaName" placeholder="e.g., Kabulonga, CBD">
-                </div>
-                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-                    <button class="btn-primary" onclick="saveArea()">Add Area</button>
-                    <button class="btn-secondary" onclick="document.getElementById('areaName').value = ''">Clear</button>
-                </div>
-
-                <h4 style="margin-bottom: 1rem; font-weight: 700;">Current Areas</h4>
-                <div id="areaList" class="category-list"></div>
-            </div>
-        </div>
-
-        <!-- BRANDING TAB -->
-        <div id="branding-tab" class="tab-content">
-            <div class="admin-form">
-                <h3>App Branding & Settings</h3>
-                
-                <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label>App Title</label>
-                    <input type="text" id="brandAppTitle" placeholder="e.g., Lusaka Auto Services Finder">
-                </div>
-
-                <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label>App Tagline</label>
-                    <input type="text" id="brandAppTagline" placeholder="e.g., Find the right mechanic for your vehicle">
-                </div>
-
-                <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label>App Icon/Emoji</label>
-                    <input type="text" id="brandAppIcon" placeholder="e.g., 🚗" maxlength="2">
-                    <small style="color: #6b7280; margin-top: 0.5rem;">Enter an emoji or leave blank</small>
-                </div>
-
-                <h4 style="margin: 2rem 0 1rem 0; font-weight: 700;">Color Scheme</h4>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Primary Color</label>
-                        <div style="display: flex; gap: 1rem; align-items: center;">
-                            <input type="color" id="brandPrimaryColor" style="width: 60px; height: 40px;">
-                            <input type="text" id="brandPrimaryColorHex" placeholder="#667eea" style="flex: 1;">
-                        </div>
+            <!-- DATA MANAGEMENT TAB -->
+            <div id="data-tab" class="tab-content">
+                <div class="export-section">
+                    <h3>💾 Export / Import Data</h3>
+                    <p style="margin-bottom: 2rem; color: #6b7280;">Backup your data or transfer it to another browser</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn-primary" onclick="exportData()">📥 Export All Data</button>
+                        <button class="btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import Data</button>
+                        <button class="btn-danger" onclick="clearAllData()">🗑️ Clear All Data</button>
                     </div>
-                    <div class="form-group">
-                        <label>Secondary Color</label>
-                        <div style="display: flex; gap: 1rem; align-items: center;">
-                            <input type="color" id="brandSecondaryColor" style="width: 60px; height: 40px;">
-                            <input type="text" id="brandSecondaryColorHex" placeholder="#764ba2" style="flex: 1;">
-                        </div>
-                    </div>
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
                 </div>
-
-                <h4 style="margin: 2rem 0 1rem 0; font-weight: 700;">Admin Password</h4>
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label>Change Admin Password</label>
-                    <input type="password" id="changeAdminPassword" placeholder="Enter new password">
-                    <button class="btn-secondary" style="margin-top: 0.75rem;" onclick="changePassword()">Update Password</button>
-                </div>
-
-                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <button class="btn-primary" onclick="saveBranding()">Save Settings</button>
-                    <button class="btn-secondary" onclick="resetBranding()">Reset to Default</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- DATA MANAGEMENT TAB -->
-        <div id="data-tab" class="tab-content">
-            <div class="export-section">
-                <h3>💾 Export / Import Data</h3>
-                <p style="margin-bottom: 2rem; color: #6b7280;">Backup your data or transfer it to another browser</p>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn-primary" onclick="exportData()">📥 Export All Data</button>
-                    <button class="btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import Data</button>
-                    <button class="btn-danger" onclick="clearAllData()">🗑️ Clear All Data</button>
-                </div>
-                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
             </div>
         </div>
     </div>
@@ -913,6 +1244,8 @@
         let isAdminMode = false;
 
         document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
+            initMouseParallax();
             loadData();
             initMap();
             applyBranding();
@@ -943,6 +1276,35 @@
                 if (e.key === 'Enter') checkAdminPassword();
             });
         });
+
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        function initMouseParallax() {
+            document.addEventListener('mousemove', (e) => {
+                const orbs = document.querySelectorAll('.orb');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                orbs.forEach((orb, index) => {
+                    const speed = (index + 1) * 20;
+                    const xOffset = (x - 0.5) * speed;
+                    const yOffset = (y - 0.5) * speed;
+                    orb.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+                });
+            });
+        }
 
         function loadData() {
             const storedProviders = localStorage.getItem('autoProviders');
@@ -976,16 +1338,65 @@
         }
 
         function getDefaultAreas() {
-            return ['CBD', 'Kabulonga', 'Roma', 'Woodlands', 'Chelston', 'Kabwata'];
+            return [
+                'CBD (Central Business District)',
+                'Kabulonga',
+                'Roma',
+                'Woodlands',
+                'Chelston',
+                'Kabwata',
+                'Longacres',
+                'Olympia Park',
+                'Rhodes Park',
+                'Northmead',
+                'Chilenje',
+                'Kalingalinga',
+                'Mtendere',
+                'Garden House',
+                'Meanwood',
+                'Kalundu',
+                'Chaisa',
+                'Chawama',
+                'Chipata Compound',
+                'Emmasdale',
+                'Kabanana',
+                'Kamwala',
+                'Lilayi',
+                'Makeni',
+                'Matero',
+                'Ngombe',
+                'PHI (President\'s Housing Initiative)',
+                'Salama Park',
+                'Jesmondine',
+                'State Lodge',
+                'Sunningdale',
+                'Twin Palm',
+                'Fair View',
+                'Avondale',
+                'Libala',
+                'Mandevu',
+                'John Laing',
+                'Chudleigh',
+                'Silverest',
+                'Makishi',
+                'Kamulanga',
+                'Palabana',
+                'Ng\'ombe',
+                'Zingalume',
+                'Bauleni',
+                'Misisi',
+                'George',
+                'Kanyama'
+            ];
         }
 
         function getDefaultBranding() {
             return {
-                title: 'Lusaka Auto Services Finder',
-                tagline: 'Find the right mechanic for your vehicle and budget',
+                title: 'Auto Hive',
+                tagline: 'Lusaka\'s Auto Services Hub',
                 icon: '🚗',
-                primaryColor: '#667eea',
-                secondaryColor: '#764ba2'
+                primaryColor: '#f59e0b',
+                secondaryColor: '#d97706'
             };
         }
 
@@ -1156,9 +1567,11 @@
         }
 
         function applyBranding() {
-            document.getElementById('appTitle').textContent = 
-                (branding.icon ? branding.icon + ' ' : '') + branding.title;
-            document.getElementById('appTagline').textContent = branding.tagline;
+            const brandText = document.querySelector('.brand-name');
+            const taglineText = document.querySelector('.brand-tagline');
+            
+            if (brandText) brandText.textContent = branding.title;
+            if (taglineText) taglineText.textContent = branding.tagline;
             document.title = branding.title;
 
             document.documentElement.style.setProperty('--primary-color', branding.primaryColor);
@@ -1175,9 +1588,9 @@
 
         function saveBranding() {
             branding = {
-                title: document.getElementById('brandAppTitle').value || 'Auto Services Finder',
-                tagline: document.getElementById('brandAppTagline').value || '',
-                icon: document.getElementById('brandAppIcon').value || '',
+                title: document.getElementById('brandAppTitle').value || 'Auto Hive',
+                tagline: document.getElementById('brandAppTagline').value || 'Lusaka\'s Auto Services Hub',
+                icon: document.getElementById('brandAppIcon').value || '🚗',
                 primaryColor: document.getElementById('brandPrimaryColor').value,
                 secondaryColor: document.getElementById('brandSecondaryColor').value
             };
@@ -1274,6 +1687,7 @@
 
             if (!areas.includes(area)) {
                 areas.push(area);
+                areas.sort();
                 saveAreas();
                 updateDropdowns();
                 displayAreas();
@@ -1303,7 +1717,7 @@
             container.innerHTML = areas.map(a => `
                 <div class="category-item">
                     <div><strong>${a}</strong></div>
-                    <button class="btn-danger btn-small" onclick="deleteArea('${a}')">Delete</button>
+                    <button class="btn-danger btn-small" onclick="deleteArea('${a.replace(/'/g, "\\'")}')" >Delete</button>
                 </div>
             `).join('');
         }
@@ -1496,7 +1910,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `auto-services-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `auto-hive-backup-${new Date().toISOString().split('T')[0]}.json`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -1563,4 +1977,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
