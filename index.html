@@ -159,7 +159,7 @@
 
         .container { max-width:1400px; margin:0 auto; padding:2rem 1rem; background:transparent; min-height:100vh; position:relative; }
 
-        .tabs { display:flex; gap:0.75rem; margin-bottom:2rem; background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); padding:0.75rem; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.1); flex-wrap:wrap; border:1px solid rgba(255,255,255,0.2); }
+        .tabs { display:flex; gap:0.75rem; margin-bottom:2rem; background:rgba(255,255,255,0.98); padding:0.75rem; border-radius:16px; box-shadow:0 2px 10px rgba(0,0,0,0.08); flex-wrap:wrap; border:1px solid rgba(255,255,255,0.2); }
         .tab { padding:0.875rem 1.75rem; border:none; background:transparent; cursor:pointer; border-radius:12px; font-weight:600; font-size:0.95rem; transition:all 0.3s ease; color:var(--text-light); }
         .tab.active { background:linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color:white; box-shadow:0 4px 12px rgba(245,158,11,0.3); transform:translateY(-2px); }
         .tab.admin-only { display:none; }
@@ -217,11 +217,19 @@
         .service-tag { background:linear-gradient(135deg,#f3f4f6,#e5e7eb); padding:0.4rem 1rem; border-radius:50px; font-size:0.85rem; color:var(--text-dark); font-weight:600; transition:all 0.3s ease; }
         .service-tag:hover { background:linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color:white; transform:translateY(-2px); }
 
-        .admin-form { background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); padding:2.5rem; border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.12); margin-bottom:2rem; border:1px solid rgba(255,255,255,0.2); }
+        .admin-form { background:rgba(255,255,255,0.98); padding:2.5rem; border-radius:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1); margin-bottom:2rem; border:1px solid rgba(255,255,255,0.2); }
         .admin-form h3 { font-size:1.5rem; margin-bottom:2rem; color:var(--text-dark); font-weight:700; }
         .form-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; margin-bottom:1.5rem; }
 
-        .providers-list { background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.12); overflow:hidden; border:1px solid rgba(255,255,255,0.2); }
+        .providers-list { 
+            background:rgba(255,255,255,0.98); 
+            border-radius:20px; 
+            box-shadow:0 4px 15px rgba(0,0,0,0.1); 
+            overflow:hidden; 
+            border:1px solid rgba(255,255,255,0.2);
+            max-height: 600px;
+            overflow-y: auto;
+        }
         .provider-item { padding:1.5rem; border-bottom:1px solid rgba(243,244,246,0.8); display:flex; justify-content:space-between; align-items:center; transition:all 0.3s ease; }
         .provider-item:hover { background:rgba(249,250,251,0.8); padding-left:2rem; }
         .provider-item:last-child { border-bottom:none; }
@@ -233,7 +241,7 @@
 
         .no-results { text-align:center; padding:4rem 2rem; color:var(--text-light); font-size:1.1rem; }
 
-        .category-manager { background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); padding:2.5rem; border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.12); margin-bottom:2rem; border:1px solid rgba(255,255,255,0.2); }
+        .category-manager { background:rgba(255,255,255,0.98); padding:2.5rem; border-radius:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1); margin-bottom:2rem; border:1px solid rgba(255,255,255,0.2); }
         .category-manager h3 { font-size:1.5rem; font-weight:700; margin-bottom:0.5rem; }
         .category-list { display:grid; gap:0.75rem; margin-top:1.5rem; }
         .category-item { display:flex; justify-content:space-between; align-items:center; padding:1.25rem; background:rgba(249,250,251,0.8); border-radius:12px; border:1px solid rgba(229,231,235,0.8); transition:all 0.3s ease; }
@@ -251,6 +259,13 @@
             .search-panel, .admin-form, .category-manager { padding:1.5rem; }
             #map { height:400px; }
             .app-description ul { grid-template-columns:1fr; }
+            
+            /* Mobile-specific optimizations */
+            .provider-item { flex-direction:column; align-items:flex-start; gap:1rem; }
+            .provider-actions { width:100%; justify-content:flex-start; }
+            .form-row { grid-template-columns:1fr; }
+            button { padding:1rem 1.5rem; font-size:1rem; min-height:48px; }
+            input, select, textarea { font-size:16px; /* Prevents zoom on focus */ }
         }
     </style>
 </head>
@@ -498,8 +513,24 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            initParticles();
-            initMouseParallax();
+            // Detect mobile and disable animations entirely
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            
+            if (isMobile) {
+                // Hide animated background on mobile, use static automotive pattern instead
+                document.querySelector('.carwow-background').style.display = 'none';
+                // Create subtle automotive-themed background
+                document.body.style.background = `
+                    linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%),
+                    repeating-linear-gradient(45deg, transparent, transparent 50px, rgba(245,158,11,0.03) 50px, rgba(245,158,11,0.03) 100px)
+                `;
+                document.body.style.backgroundBlendMode = 'overlay';
+                console.log('Mobile detected - using static background');
+            } else {
+                initParticles();
+                initMouseParallax();
+            }
+            
             loadData();
             initMap();
             applyBranding();
@@ -626,12 +657,24 @@
         function enableAdminMode() {
             document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
             document.getElementById('adminButtonText').textContent = '🔓 Logout';
+            // Disable animations in admin mode for better performance
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            if (!isMobile) {
+                document.querySelector('.carwow-background').style.display = 'none';
+                document.body.style.background = 'linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%)';
+            }
             alert('Admin mode enabled!');
         }
         function logoutAdmin() {
             isAdminMode = false;
             document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
             document.getElementById('adminButtonText').textContent = 'Admin Login';
+            // Re-enable animations
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            if (!isMobile) {
+                document.querySelector('.carwow-background').style.display = 'block';
+                document.body.style.background = 'var(--bg-color)';
+            }
             switchTab('search');
             alert('Logged out of admin mode');
         }
@@ -881,19 +924,36 @@
         }
         function displayProvidersList() {
             const container = document.getElementById('providersList');
-            if (providers.length === 0) { container.innerHTML = '<div class="no-results">No providers yet. Add your first provider above!</div>'; return; }
-            container.innerHTML = providers.map(p => `
-                <div class="provider-item">
-                    <div>
-                        <strong style="font-size:1.05rem;">${htmlEsc(p.businessName)}</strong><br>
-                        <small style="color:#6b7280;">${htmlEsc(p.area)} • ${htmlEsc(p.phoneNumber)}</small>
+            console.log('displayProvidersList called, providers count:', providers.length);
+            
+            if (!container) {
+                console.error('providersList container not found!');
+                return;
+            }
+            
+            if (providers.length === 0) { 
+                container.innerHTML = '<div class="no-results">No providers yet. Add your first provider above!</div>'; 
+                return; 
+            }
+            
+            try {
+                container.innerHTML = providers.map(p => `
+                    <div class="provider-item">
+                        <div>
+                            <strong style="font-size:1.05rem;">${htmlEsc(p.businessName)}</strong><br>
+                            <small style="color:#6b7280;">${htmlEsc(p.area)} • ${htmlEsc(p.phoneNumber)}</small>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn-secondary btn-small" onclick="editProvider(${p.id})">Edit</button>
+                            <button class="btn-danger btn-small" onclick="deleteProvider(${p.id})">Delete</button>
+                        </div>
                     </div>
-                    <div class="provider-actions">
-                        <button class="btn-secondary btn-small" onclick="editProvider(${p.id})">Edit</button>
-                        <button class="btn-danger btn-small" onclick="deleteProvider(${p.id})">Delete</button>
-                    </div>
-                </div>
-            `).join('');
+                `).join('');
+                console.log('Provider list rendered successfully');
+            } catch (error) {
+                console.error('Error rendering provider list:', error);
+                container.innerHTML = '<div class="no-results" style="color:red;">Error loading providers. Check console.</div>';
+            }
         }
 
         // ---- SEARCH / DISPLAY ----
