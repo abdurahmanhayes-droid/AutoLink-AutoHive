@@ -1546,8 +1546,13 @@
         function switchTab(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            
-            event.target.classList.add('active');
+
+            // Find the tab button whose onclick contains the matching tab name
+            document.querySelectorAll('.tab').forEach(t => {
+                if (t.getAttribute('onclick') === `switchTab('${tab}')`) {
+                    t.classList.add('active');
+                }
+            });
             document.getElementById(tab + '-tab').classList.add('active');
         }
 
@@ -1703,8 +1708,10 @@
         }
 
         function deleteArea(area) {
-            if (confirm(`Delete area "${area}"?`)) {
-                areas = areas.filter(a => a !== area);
+            // Decode any HTML entities back to the real characters
+            const decoded = area.replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+            if (confirm(`Delete area "${decoded}"?`)) {
+                areas = areas.filter(a => a !== decoded);
                 saveAreas();
                 updateDropdowns();
                 displayAreas();
@@ -1718,12 +1725,14 @@
                 return;
             }
 
-            container.innerHTML = areas.map(a => `
+            container.innerHTML = areas.map(a => {
+                const safeArea = a.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                return `
                 <div class="category-item">
-                    <div><strong>${a}</strong></div>
-                    <button class="btn-danger btn-small" onclick="deleteArea('${a.replace(/'/g, "\\'")}')" >Delete</button>
-                </div>
-            `).join('');
+                    <div><strong>${safeArea}</strong></div>
+                    <button class="btn-danger btn-small" onclick="deleteArea('${safeArea}')">Delete</button>
+                </div>`;
+            }).join('');
         }
 
         function saveProvider(e) {
