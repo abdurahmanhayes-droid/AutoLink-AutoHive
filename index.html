@@ -29,13 +29,10 @@
             overflow-x: hidden;
         }
 
-        /* ===== CARWOW ANIMATED BACKGROUND ===== */
         .carwow-background {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2a2f4a 100%);
             overflow: hidden;
             z-index: 0;
@@ -48,879 +45,210 @@
             opacity: 0.3;
             animation: float 20s infinite ease-in-out;
         }
-
-        .orb-1 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
-            top: -10%;
-            left: -10%;
-            animation-delay: 0s;
-        }
-
-        .orb-2 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%);
-            bottom: -10%;
-            right: -10%;
-            animation-delay: -7s;
-        }
-
-        .orb-3 {
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -14s;
-        }
+        .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%); top: -10%; left: -10%; animation-delay: 0s; }
+        .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%); bottom: -10%; right: -10%; animation-delay: -7s; }
+        .orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -14s; }
 
         @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            33% {
-                transform: translate(100px, -100px) scale(1.1);
-            }
-            66% {
-                transform: translate(-100px, 100px) scale(0.9);
-            }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -100px) scale(1.1); }
+            66% { transform: translate(-100px, 100px) scale(0.9); }
         }
 
         .grid-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(245,158,11,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(245,158,11,0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: gridMove 20s linear infinite;
         }
+        @keyframes gridMove { 0% { transform: translate(0,0); } 100% { transform: translate(50px,50px); } }
 
-        @keyframes gridMove {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(50px, 50px);
-            }
-        }
-
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(245, 158, 11, 0.5);
-            border-radius: 50%;
-            animation: rise 15s infinite ease-in;
-        }
-
+        .particles { position: absolute; width: 100%; height: 100%; overflow: hidden; }
+        .particle { position: absolute; width: 4px; height: 4px; background: rgba(245,158,11,0.5); border-radius: 50%; animation: rise 15s infinite ease-in; }
         @keyframes rise {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
         }
 
-        /* ===== MAIN CONTENT WRAPPER ===== */
-        .content-wrapper {
-            position: relative;
-            z-index: 10;
-        }
+        .content-wrapper { position: relative; z-index: 10; }
 
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            padding: 2.5rem 1.5rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            color: white; padding: 2.5rem 1.5rem;
+            position: relative; overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
-
         .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
             opacity: 0.3;
         }
+        .header-content { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; }
 
-        .header-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Auto Hive Logo */
-        .brand-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
+        .brand-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
 
         .auto-hive-logo {
-            position: relative;
-            width: 80px;
-            height: 80px;
+            position: relative; width: 80px; height: 80px;
             background: linear-gradient(135deg, #fff 0%, #fef3c7 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             animation: logoPulse 3s infinite ease-in-out;
         }
-
         @keyframes logoPulse {
-            0%, 100% {
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                transform: scale(1);
-            }
-            50% {
-                box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
-                transform: scale(1.02);
-            }
+            0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.3); transform: scale(1); }
+            50% { box-shadow: 0 15px 40px rgba(245,158,11,0.4); transform: scale(1.02); }
         }
 
-        .honeycomb-grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
-            padding: 12px;
-        }
+        .honeycomb-grid { position: absolute; width: 100%; height: 100%; display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; padding: 12px; }
+        .hex-cell { background: var(--primary-color); border-radius: 3px; opacity: 0.8; }
+        .hex-cell:nth-child(1){opacity:0.9} .hex-cell:nth-child(2){opacity:0.7} .hex-cell:nth-child(3){opacity:0.85}
+        .hex-cell:nth-child(4){opacity:0.75} .hex-cell:nth-child(5){opacity:1;background:var(--secondary-color);box-shadow:0 0 8px rgba(217,119,6,0.6)} .hex-cell:nth-child(6){opacity:0.8}
+        .hex-cell:nth-child(7){opacity:0.85} .hex-cell:nth-child(8){opacity:0.7} .hex-cell:nth-child(9){opacity:0.9}
 
-        .hex-cell {
-            background: var(--primary-color);
-            border-radius: 3px;
-            opacity: 0.8;
-        }
+        .car-icon { position: absolute; font-size: 36px; top: 50%; left: 50%; transform: translate(-50%,-50%); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 
-        .hex-cell:nth-child(1) { opacity: 0.9; }
-        .hex-cell:nth-child(2) { opacity: 0.7; }
-        .hex-cell:nth-child(3) { opacity: 0.85; }
-        .hex-cell:nth-child(4) { opacity: 0.75; }
-        .hex-cell:nth-child(5) { 
-            opacity: 1; 
-            background: var(--secondary-color);
-            box-shadow: 0 0 8px rgba(217, 119, 6, 0.6);
-        }
-        .hex-cell:nth-child(6) { opacity: 0.8; }
-        .hex-cell:nth-child(7) { opacity: 0.85; }
-        .hex-cell:nth-child(8) { opacity: 0.7; }
-        .hex-cell:nth-child(9) { opacity: 0.9; }
-
-        .car-icon {
-            position: absolute;
-            font-size: 36px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .brand-name {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        .brand-tagline {
-            font-size: 1rem;
-            opacity: 0.95;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
+        .brand-text { display: flex; flex-direction: column; align-items: center; }
+        .brand-name { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); line-height: 1; margin-bottom: 0.5rem; }
+        .brand-tagline { font-size: 1rem; opacity: 0.95; font-weight: 400; letter-spacing: 0.5px; }
 
         .app-description {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 12px;
+            padding: 1.5rem; margin-top: 1.5rem; max-width: 800px;
+            margin-left: auto; margin-right: auto; text-align: center;
         }
-
-        .app-description h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-
-        .app-description p {
-            line-height: 1.6;
-            opacity: 0.95;
-            margin-bottom: 1rem;
-        }
-
-        .app-description ul {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.75rem;
-        }
-
-        .app-description li {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .app-description li::before {
-            content: '✓';
-            background: rgba(255, 255, 255, 0.2);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
+        .app-description h3 { font-size: 1.1rem; margin-bottom: 0.75rem; font-weight: 600; }
+        .app-description p { line-height: 1.6; opacity: 0.95; margin-bottom: 1rem; }
+        .app-description ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 0.75rem; }
+        .app-description li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; }
+        .app-description li::before { content:'✓'; background:rgba(255,255,255,0.2); width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; flex-shrink:0; }
 
         .admin-toggle {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            z-index: 10;
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); color: white;
+            padding: 0.6rem 1.2rem; border-radius: 50px; cursor: pointer;
+            font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; z-index: 10;
         }
+        .admin-toggle:hover { background:rgba(255,255,255,0.25); transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.2); }
 
-        .admin-toggle:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .login-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .login-overlay.active {
-            display: flex;
-        }
+        .login-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); z-index:10000; justify-content:center; align-items:center; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        .login-overlay.active { display: flex; }
 
         .login-box {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            max-width: 440px;
-            width: 90%;
-            animation: slideUp 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .login-box h2 {
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-            font-size: 1.8rem;
-        }
-
-        .login-box input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .login-box input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
-        }
-
-        .login-box .error {
-            color: #ef4444;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            display: none;
-            padding: 0.75rem;
-            background: #fef2f2;
-            border-radius: 8px;
-        }
-
-        .login-box .error.show {
-            display: block;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-            background: transparent;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 0.75rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            flex-wrap: wrap;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .tab {
-            padding: 0.875rem 1.75rem;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            color: var(--text-light);
-        }
-
-        .tab.active {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .tab.admin-only {
-            display: none;
-        }
-
-        .tab:hover:not(.active) {
-            background: rgba(243, 244, 246, 0.8);
-            color: var(--text-dark);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .search-panel {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .search-panel:hover {
-            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-            transform: translateY(-2px);
-        }
-
-        .search-panel h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-dark);
-            font-weight: 700;
-        }
-
-        .search-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            margin-bottom: 0.6rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        input, select, textarea {
-            padding: 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
-        }
-
-        button {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-secondary {
-            background: #6b7280;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #4b5563;
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
-        }
-
-        #map {
-            height: 550px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            overflow: hidden;
-        }
-
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 2rem;
-        }
-
-        .provider-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-            transition: all 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .provider-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .provider-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
-        }
-
-        .provider-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .provider-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1.25rem;
-        }
-
-        .provider-name {
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            line-height: 1.3;
-        }
-
-        .price-badge {
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .price-budget {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-        }
-
-        .price-mid-range {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
-        }
-
-        .price-premium {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color: white;
-        }
-
-        .rating {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            padding: 0.75rem;
-            background: #fef3c7;
-            border-radius: 12px;
-            width: fit-content;
-        }
-
-        .stars {
-            color: #f59e0b;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-        }
-
-        .rating span {
-            font-weight: 700;
-            color: var(--text-dark);
-            font-size: 1.1rem;
-        }
-
-        .provider-info {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
-        .provider-info div {
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: start;
-            gap: 0.5rem;
-        }
-
-        .provider-info strong {
-            color: var(--text-dark);
-        }
-
-        .services-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 1.25rem;
-            padding-top: 1.25rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .service-tag {
-            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            color: var(--text-dark);
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .service-tag:hover {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .admin-form {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .admin-form h3 {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: var(--text-dark);
-            font-weight: 700;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .providers-list {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .provider-item {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(243, 244, 246, 0.8);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .provider-item:hover {
-            background: rgba(249, 250, 251, 0.8);
-            padding-left: 2rem;
-        }
-
-        .provider-item:last-child {
-            border-bottom: none;
-        }
-
-        .provider-actions {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .btn-small {
-            padding: 0.6rem 1.25rem;
-            font-size: 0.875rem;
-        }
-
-        .export-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-            margin-bottom: 2rem;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .export-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
-        .category-manager {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .category-manager h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .category-list {
-            display: grid;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        .category-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem;
-            background: rgba(249, 250, 251, 0.8);
-            border-radius: 12px;
-            border: 1px solid rgba(229, 231, 235, 0.8);
-            transition: all 0.3s ease;
-        }
-
-        .category-item:hover {
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transform: translateX(4px);
-        }
+            background:rgba(255,255,255,0.95); backdrop-filter:blur(20px);
+            padding:2.5rem; border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,0.4);
+            max-width:440px; width:90%; animation:slideUp 0.4s ease;
+            border:1px solid rgba(255,255,255,0.2);
+        }
+        @keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+        .login-box h2 { margin-bottom:1rem; color:var(--text-dark); font-size:1.8rem; }
+        .login-box input { width:100%; padding:1rem; border:2px solid #e5e7eb; border-radius:12px; margin-bottom:1rem; font-size:1rem; transition:all 0.3s ease; background:white; }
+        .login-box input:focus { outline:none; border-color:var(--primary-color); box-shadow:0 0 0 3px rgba(245,158,11,0.1); }
+        .login-box .error { color:#ef4444; font-size:0.9rem; margin-bottom:1rem; display:none; padding:0.75rem; background:#fef2f2; border-radius:8px; }
+        .login-box .error.show { display:block; }
+
+        .container { max-width:1400px; margin:0 auto; padding:2rem 1rem; background:transparent; min-height:100vh; position:relative; }
+
+        .tabs { display:flex; gap:0.75rem; margin-bottom:2rem; background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); padding:0.75rem; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.1); flex-wrap:wrap; border:1px solid rgba(255,255,255,0.2); }
+        .tab { padding:0.875rem 1.75rem; border:none; background:transparent; cursor:pointer; border-radius:12px; font-weight:600; font-size:0.95rem; transition:all 0.3s ease; color:var(--text-light); }
+        .tab.active { background:linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color:white; box-shadow:0 4px 12px rgba(245,158,11,0.3); transform:translateY(-2px); }
+        .tab.admin-only { display:none; }
+        .tab:hover:not(.active) { background:rgba(243,244,246,0.8); color:var(--text-dark); }
+
+        .tab-content { display:none; }
+        .tab-content.active { display:block; animation:fadeIn 0.4s ease; }
+
+        .search-panel { background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); padding:2.5rem; border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.12); margin-bottom:2rem; border:1px solid rgba(255,255,255,0.2); transition:all 0.3s ease; }
+        .search-panel:hover { box-shadow:0 12px 40px rgba(0,0,0,0.15); transform:translateY(-2px); }
+        .search-panel h3 { font-size:1.5rem; margin-bottom:1.5rem; color:var(--text-dark); font-weight:700; }
+
+        .search-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1.25rem; margin-bottom:1.5rem; }
+        .form-group { display:flex; flex-direction:column; }
+
+        label { margin-bottom:0.6rem; font-weight:600; color:var(--text-dark); font-size:0.9rem; text-transform:uppercase; letter-spacing:0.5px; }
+        input, select, textarea { padding:1rem; border:2px solid #e5e7eb; border-radius:12px; font-size:1rem; transition:all 0.3s ease; background:white; }
+        input:focus, select:focus, textarea:focus { outline:none; border-color:var(--primary-color); box-shadow:0 0 0 3px rgba(245,158,11,0.1); }
+
+        button { padding:1rem 2rem; border:none; border-radius:12px; cursor:pointer; font-weight:600; font-size:1rem; transition:all 0.3s ease; }
+        .btn-primary { background:linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color:white; box-shadow:0 4px 12px rgba(245,158,11,0.3); }
+        .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(245,158,11,0.4); }
+        .btn-primary:active { transform:translateY(0); }
+        .btn-secondary { background:#6b7280; color:white; }
+        .btn-secondary:hover { background:#4b5563; transform:translateY(-2px); }
+        .btn-danger { background:#ef4444; color:white; }
+        .btn-danger:hover { background:#dc2626; transform:translateY(-2px); }
+
+        #map { height:550px; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.15); margin-bottom:2rem; border:1px solid rgba(255,255,255,0.2); overflow:hidden; }
+
+        .results-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px,1fr)); gap:2rem; }
+
+        .provider-card { background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); border-radius:20px; padding:2rem; box-shadow:0 8px 30px rgba(0,0,0,0.12); transition:all 0.4s ease; border:1px solid rgba(255,255,255,0.2); position:relative; overflow:hidden; }
+        .provider-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg, var(--primary-color), var(--secondary-color)); transform:scaleX(0); transition:transform 0.3s ease; }
+        .provider-card:hover { transform:translateY(-8px); box-shadow:0 15px 50px rgba(0,0,0,0.2); }
+        .provider-card:hover::before { transform:scaleX(1); }
+
+        .provider-header { display:flex; justify-content:space-between; align-items:start; margin-bottom:1.25rem; }
+        .provider-name { font-size:1.35rem; font-weight:700; color:var(--text-dark); line-height:1.3; }
+
+        .price-badge { padding:0.4rem 1rem; border-radius:50px; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+        .price-budget { background:linear-gradient(135deg,#10b981,#059669); color:white; }
+        .price-mid-range { background:linear-gradient(135deg,#f59e0b,#d97706); color:white; }
+        .price-premium { background:linear-gradient(135deg,#8b5cf6,#7c3aed); color:white; }
+
+        .rating { display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem; padding:0.75rem; background:#fef3c7; border-radius:12px; width:fit-content; }
+        .stars { color:#f59e0b; font-size:1.2rem; letter-spacing:2px; }
+        .rating span { font-weight:700; color:var(--text-dark); font-size:1.1rem; }
+
+        .provider-info { color:var(--text-light); font-size:0.95rem; line-height:1.8; }
+        .provider-info div { margin-bottom:0.6rem; display:flex; align-items:start; gap:0.5rem; }
+        .provider-info strong { color:var(--text-dark); }
+
+        .services-tags { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1.25rem; padding-top:1.25rem; border-top:1px solid #e5e7eb; }
+        .service-tag { background:linear-gradient(135deg,#f3f4f6,#e5e7eb); padding:0.4rem 1rem; border-radius:50px; font-size:0.85rem; color:var(--text-dark); font-weight:600; transition:all 0.3s ease; }
+        .service-tag:hover { background:linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color:white; transform:translateY(-2px); }
+
+        .admin-form { background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); padding:2.5rem; border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.12); margin-bottom:2rem; border:1px solid rgba(255,255,255,0.2); }
+        .admin-form h3 { font-size:1.5rem; margin-bottom:2rem; color:var(--text-dark); font-weight:700; }
+        .form-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; margin-bottom:1.5rem; }
+
+        .providers-list { background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.12); overflow:hidden; border:1px solid rgba(255,255,255,0.2); }
+        .provider-item { padding:1.5rem; border-bottom:1px solid rgba(243,244,246,0.8); display:flex; justify-content:space-between; align-items:center; transition:all 0.3s ease; }
+        .provider-item:hover { background:rgba(249,250,251,0.8); padding-left:2rem; }
+        .provider-item:last-child { border-bottom:none; }
+        .provider-actions { display:flex; gap:0.75rem; }
+        .btn-small { padding:0.6rem 1.25rem; font-size:0.875rem; }
+
+        .export-section { background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); padding:3rem; border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.12); margin-bottom:2rem; text-align:center; border:1px solid rgba(255,255,255,0.2); }
+        .export-section h3 { margin-bottom:1rem; font-size:1.5rem; font-weight:700; }
+
+        .no-results { text-align:center; padding:4rem 2rem; color:var(--text-light); font-size:1.1rem; }
+
+        .category-manager { background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); padding:2.5rem; border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.12); margin-bottom:2rem; border:1px solid rgba(255,255,255,0.2); }
+        .category-manager h3 { font-size:1.5rem; font-weight:700; margin-bottom:0.5rem; }
+        .category-list { display:grid; gap:0.75rem; margin-top:1.5rem; }
+        .category-item { display:flex; justify-content:space-between; align-items:center; padding:1.25rem; background:rgba(249,250,251,0.8); border-radius:12px; border:1px solid rgba(229,231,235,0.8); transition:all 0.3s ease; }
+        .category-item:hover { background:rgba(255,255,255,0.95); box-shadow:0 2px 8px rgba(0,0,0,0.08); transform:translateX(4px); }
 
         @media (max-width: 768px) {
-            .brand-container {
-                gap: 0.75rem;
-            }
-
-            .auto-hive-logo {
-                width: 60px;
-                height: 60px;
-            }
-
-            .car-icon {
-                font-size: 28px;
-            }
-
-            .brand-name {
-                font-size: 2rem;
-            }
-
-            .search-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .results-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .admin-toggle {
-                position: static;
-                display: block;
-                margin-top: 1.5rem;
-                width: 100%;
-            }
-
-            .container {
-                padding: 1rem 0.75rem;
-            }
-
-            .search-panel, .admin-form, .category-manager {
-                padding: 1.5rem;
-            }
-
-            #map {
-                height: 400px;
-            }
-
-            .app-description ul {
-                grid-template-columns: 1fr;
-            }
+            .brand-container { gap:0.75rem; }
+            .auto-hive-logo { width:60px; height:60px; }
+            .car-icon { font-size:28px; }
+            .brand-name { font-size:2rem; }
+            .search-grid { grid-template-columns:1fr; }
+            .results-grid { grid-template-columns:1fr; }
+            .admin-toggle { position:static; display:block; margin-top:1.5rem; width:100%; }
+            .container { padding:1rem 0.75rem; }
+            .search-panel, .admin-form, .category-manager { padding:1.5rem; }
+            #map { height:400px; }
+            .app-description ul { grid-template-columns:1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Carwow Animated Background -->
     <div class="carwow-background">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
@@ -929,23 +257,21 @@
         <div class="particles" id="particles"></div>
     </div>
 
-    <!-- Content Wrapper -->
     <div class="content-wrapper">
-        <!-- Login Overlay -->
         <div class="login-overlay" id="loginOverlay">
             <div class="login-box">
                 <h2>🔐 Admin Access</h2>
-                <p style="color: #6b7280; margin-bottom: 1.5rem;">Enter your admin password to manage the app</p>
+                <p style="color:#6b7280;margin-bottom:1.5rem;">Enter your admin password to manage the app</p>
                 <input type="password" id="adminPassword" placeholder="Enter password">
                 <div class="error" id="loginError">❌ Incorrect password</div>
-                <div style="display: flex; gap: 1rem;">
+                <div style="display:flex;gap:1rem;">
                     <button class="btn-primary" onclick="checkAdminPassword()">Login</button>
                     <button class="btn-secondary" onclick="closeLogin()">Cancel</button>
                 </div>
-                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #f3f4f6;">
-                    <p style="font-size: 0.95rem; color: #6b7280; margin-bottom: 0.75rem; font-weight: 600;">First time? Set your password</p>
-                    <input type="password" id="newAdminPassword" placeholder="Create admin password" style="margin-top: 0.5rem;">
-                    <button class="btn-primary" style="width: 100%; margin-top: 0.75rem;" onclick="setAdminPassword()">Set Password</button>
+                <div style="margin-top:2rem;padding-top:2rem;border-top:2px solid #f3f4f6;">
+                    <p style="font-size:0.95rem;color:#6b7280;margin-bottom:0.75rem;font-weight:600;">First time? Set your password</p>
+                    <input type="password" id="newAdminPassword" placeholder="Create admin password" style="margin-top:0.5rem;">
+                    <button class="btn-primary" style="width:100%;margin-top:0.75rem;" onclick="setAdminPassword()">Set Password</button>
                 </div>
             </div>
         </div>
@@ -955,15 +281,9 @@
                 <div class="brand-container">
                     <div class="auto-hive-logo">
                         <div class="honeycomb-grid">
-                            <div class="hex-cell"></div>
-                            <div class="hex-cell"></div>
-                            <div class="hex-cell"></div>
-                            <div class="hex-cell"></div>
-                            <div class="hex-cell"></div>
-                            <div class="hex-cell"></div>
-                            <div class="hex-cell"></div>
-                            <div class="hex-cell"></div>
-                            <div class="hex-cell"></div>
+                            <div class="hex-cell"></div><div class="hex-cell"></div><div class="hex-cell"></div>
+                            <div class="hex-cell"></div><div class="hex-cell"></div><div class="hex-cell"></div>
+                            <div class="hex-cell"></div><div class="hex-cell"></div><div class="hex-cell"></div>
                         </div>
                         <div class="car-icon">🚗</div>
                     </div>
@@ -972,7 +292,6 @@
                         <div class="brand-tagline">Lusaka's Auto Services Hub</div>
                     </div>
                 </div>
-
                 <div class="app-description">
                     <h3>🎯 Your Complete Auto Service Solution</h3>
                     <p>Auto Hive connects you with trusted automotive service providers across Lusaka. Whether you need routine maintenance, emergency repairs, or specialized services, find the right professional for your vehicle in seconds.</p>
@@ -1005,10 +324,7 @@
                 <div class="search-panel">
                     <h3>🔎 What service do you need?</h3>
                     <div class="search-grid">
-                        <div class="form-group">
-                            <label>Service Type</label>
-                            <select id="serviceType"></select>
-                        </div>
+                        <div class="form-group"><label>Service Type</label><select id="serviceType"></select></div>
                         <div class="form-group">
                             <label>Budget Range</label>
                             <select id="budgetRange">
@@ -1018,20 +334,12 @@
                                 <option value="premium">Premium</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Area</label>
-                            <select id="areaFilter"></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Vehicle Make</label>
-                            <input type="text" id="vehicleMake" placeholder="e.g., Toyota, Nissan">
-                        </div>
+                        <div class="form-group"><label>Area</label><select id="areaFilter"></select></div>
+                        <div class="form-group"><label>Vehicle Make</label><input type="text" id="vehicleMake" placeholder="e.g., Toyota, Nissan"></div>
                     </div>
                     <button class="btn-primary" onclick="searchProviders()">🚀 Search Now</button>
                 </div>
-
                 <div id="map"></div>
-
                 <div id="results" class="results-grid"></div>
             </div>
 
@@ -1041,20 +349,11 @@
                     <h3>Add New Service Provider</h3>
                     <form id="providerForm" onsubmit="saveProvider(event)">
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>Business Name *</label>
-                                <input type="text" id="businessName" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Phone Number *</label>
-                                <input type="tel" id="phoneNumber" required>
-                            </div>
+                            <div class="form-group"><label>Business Name *</label><input type="text" id="businessName" required></div>
+                            <div class="form-group"><label>Phone Number *</label><input type="tel" id="phoneNumber" required></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>Area *</label>
-                                <select id="area" required></select>
-                            </div>
+                            <div class="form-group"><label>Area *</label><select id="area" required></select></div>
                             <div class="form-group">
                                 <label>Price Range *</label>
                                 <select id="priceRange" required>
@@ -1065,59 +364,38 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>Latitude *</label>
-                                <input type="number" step="0.000001" id="latitude" required placeholder="-15.4167">
-                            </div>
-                            <div class="form-group">
-                                <label>Longitude *</label>
-                                <input type="number" step="0.000001" id="longitude" required placeholder="28.2833">
-                            </div>
+                            <div class="form-group"><label>Latitude *</label><input type="number" step="0.000001" id="latitude" required placeholder="-15.4167"></div>
+                            <div class="form-group"><label>Longitude *</label><input type="number" step="0.000001" id="longitude" required placeholder="28.2833"></div>
                         </div>
-                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <div class="form-group" style="margin-bottom:1.5rem;">
                             <label>🔍 Auto-Find Location (Optional)</label>
-                            <div style="display: flex; gap: 0.75rem;">
-                                <input type="text" id="locationSearch" placeholder="Enter business address or area (e.g., 'Cairo Road, Lusaka' or 'Kabulonga Shopping Center')">
-                                <button type="button" class="btn-secondary" onclick="findLocation()" style="white-space: nowrap;">📍 Find</button>
+                            <div style="display:flex;gap:0.75rem;">
+                                <input type="text" id="locationSearch" placeholder="Enter business address or area (e.g., 'Cairo Road, Lusaka')">
+                                <!-- FIX #1: pass event explicitly so findLocation() can access the button -->
+                                <button type="button" class="btn-secondary" onclick="findLocation(event)" style="white-space:nowrap;">📍 Find</button>
                             </div>
-                            <small style="color: #6b7280; margin-top: 0.5rem; display: block;">This will automatically fill in the latitude and longitude fields above</small>
+                            <small style="color:#6b7280;margin-top:0.5rem;display:block;">This will automatically fill in the latitude and longitude fields above</small>
                         </div>
-                        <div class="form-group">
-                            <label>Street Address</label>
-                            <input type="text" id="streetAddress">
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea id="description" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Services Offered (select multiple)</label>
-                            <select id="services" multiple size="6"></select>
-                        </div>
+                        <div class="form-group"><label>Street Address</label><input type="text" id="streetAddress"></div>
+                        <div class="form-group"><label>Description</label><textarea id="description" rows="3"></textarea></div>
+                        <div class="form-group"><label>Services Offered (select multiple)</label><select id="services" multiple size="6"></select></div>
                         <div class="form-group">
                             <label>Vehicle Specializations</label>
                             <input type="text" id="specializations" placeholder="Toyota, Nissan, Honda (or leave blank for all vehicles)">
-                            <small style="color: #6b7280; margin-top: 0.5rem;">Comma separated. Leave blank if they work on ALL vehicles.</small>
+                            <small style="color:#6b7280;margin-top:0.5rem;">Comma separated. Leave blank if they work on ALL vehicles.</small>
                         </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>Rating (1-5)</label>
-                                <input type="number" min="1" max="5" step="0.1" id="rating" value="4.0">
-                            </div>
-                            <div class="form-group">
-                                <label>Years in Business</label>
-                                <input type="number" id="yearsInBusiness" min="0">
-                            </div>
+                            <div class="form-group"><label>Rating (1-5)</label><input type="number" min="1" max="5" step="0.1" id="rating" value="4.0"></div>
+                            <div class="form-group"><label>Years in Business</label><input type="number" id="yearsInBusiness" min="0"></div>
                         </div>
-                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <div style="display:flex;gap:1rem;margin-top:2rem;">
                             <button type="submit" class="btn-primary">💾 Save Provider</button>
                             <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
                         </div>
                     </form>
                 </div>
-
                 <div class="providers-list">
-                    <h3 style="padding: 1.5rem; background: rgba(249, 250, 251, 0.8); font-weight: 700;">Existing Providers</h3>
+                    <h3 style="padding:1.5rem;background:rgba(249,250,251,0.8);font-weight:700;">Existing Providers</h3>
                     <div id="providersList"></div>
                 </div>
             </div>
@@ -1126,41 +404,27 @@
             <div id="categories-tab" class="tab-content">
                 <div class="category-manager">
                     <h3>Manage Service Categories</h3>
-                    <p style="color: #6b7280; margin-bottom: 2rem;">Add, edit, or remove service categories</p>
-                    
+                    <p style="color:#6b7280;margin-bottom:2rem;">Add, edit, or remove service categories</p>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Category Name *</label>
-                            <input type="text" id="categoryName" placeholder="e.g., Engine Repair">
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <input type="text" id="categoryDescription" placeholder="Brief description">
-                        </div>
+                        <div class="form-group"><label>Category Name *</label><input type="text" id="categoryName" placeholder="e.g., Engine Repair"></div>
+                        <div class="form-group"><label>Description</label><input type="text" id="categoryDescription" placeholder="Brief description"></div>
                     </div>
-                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="display:flex;gap:1rem;margin-bottom:2rem;">
                         <button class="btn-primary" onclick="saveCategory()">Add Category</button>
                         <button class="btn-secondary" onclick="resetCategoryForm()">Clear</button>
                     </div>
-
-                    <h4 style="margin-bottom: 1rem; font-weight: 700;">Current Categories</h4>
+                    <h4 style="margin-bottom:1rem;font-weight:700;">Current Categories</h4>
                     <div id="categoryList" class="category-list"></div>
                 </div>
-
                 <div class="category-manager">
                     <h3>Manage Areas/Locations</h3>
-                    <p style="color: #6b7280; margin-bottom: 2rem;">Add areas where service providers are located</p>
-                    
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label>Area Name *</label>
-                        <input type="text" id="areaName" placeholder="e.g., Kabulonga, CBD">
-                    </div>
-                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <p style="color:#6b7280;margin-bottom:2rem;">Add areas where service providers are located</p>
+                    <div class="form-group" style="margin-bottom:1rem;"><label>Area Name *</label><input type="text" id="areaName" placeholder="e.g., Kabulonga, CBD"></div>
+                    <div style="display:flex;gap:1rem;margin-bottom:2rem;">
                         <button class="btn-primary" onclick="saveArea()">Add Area</button>
                         <button class="btn-secondary" onclick="document.getElementById('areaName').value = ''">Clear</button>
                     </div>
-
-                    <h4 style="margin-bottom: 1rem; font-weight: 700;">Current Areas</h4>
+                    <h4 style="margin-bottom:1rem;font-weight:700;">Current Areas</h4>
                     <div id="areaList" class="category-list"></div>
                 </div>
             </div>
@@ -1169,67 +433,34 @@
             <div id="branding-tab" class="tab-content">
                 <div class="admin-form">
                     <h3>App Branding & Settings</h3>
-                    
-                    <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <label>App Title</label>
-                        <input type="text" id="brandAppTitle" placeholder="e.g., Auto Hive">
-                    </div>
-
-                    <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <label>App Tagline</label>
-                        <input type="text" id="brandAppTagline" placeholder="e.g., Lusaka's Auto Services Hub">
-                    </div>
-
-                    <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <label>App Icon/Emoji</label>
-                        <input type="text" id="brandAppIcon" placeholder="e.g., 🚗" maxlength="2">
-                        <small style="color: #6b7280; margin-top: 0.5rem;">Enter an emoji or leave blank</small>
-                    </div>
-
-                    <h4 style="margin: 2rem 0 1rem 0; font-weight: 700;">Color Scheme</h4>
-                    
+                    <div class="form-group" style="margin-bottom:1.5rem;"><label>App Title</label><input type="text" id="brandAppTitle" placeholder="e.g., Auto Hive"></div>
+                    <div class="form-group" style="margin-bottom:1.5rem;"><label>App Tagline</label><input type="text" id="brandAppTagline" placeholder="e.g., Lusaka's Auto Services Hub"></div>
+                    <div class="form-group" style="margin-bottom:1.5rem;"><label>App Icon/Emoji</label><input type="text" id="brandAppIcon" placeholder="e.g., 🚗" maxlength="2"><small style="color:#6b7280;margin-top:0.5rem;">Enter an emoji or leave blank</small></div>
+                    <h4 style="margin:2rem 0 1rem 0;font-weight:700;">Color Scheme</h4>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Primary Color</label>
-                            <div style="display: flex; gap: 1rem; align-items: center;">
-                                <input type="color" id="brandPrimaryColor" style="width: 60px; height: 40px;">
-                                <input type="text" id="brandPrimaryColorHex" placeholder="#f59e0b" style="flex: 1;">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Secondary Color</label>
-                            <div style="display: flex; gap: 1rem; align-items: center;">
-                                <input type="color" id="brandSecondaryColor" style="width: 60px; height: 40px;">
-                                <input type="text" id="brandSecondaryColorHex" placeholder="#d97706" style="flex: 1;">
-                            </div>
-                        </div>
+                        <div class="form-group"><label>Primary Color</label><div style="display:flex;gap:1rem;align-items:center;"><input type="color" id="brandPrimaryColor" style="width:60px;height:40px;"><input type="text" id="brandPrimaryColorHex" placeholder="#f59e0b" style="flex:1;"></div></div>
+                        <div class="form-group"><label>Secondary Color</label><div style="display:flex;gap:1rem;align-items:center;"><input type="color" id="brandSecondaryColor" style="width:60px;height:40px;"><input type="text" id="brandSecondaryColorHex" placeholder="#d97706" style="flex:1;"></div></div>
                     </div>
-
-                    <h4 style="margin: 2rem 0 1rem 0; font-weight: 700;">Admin Password</h4>
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label>Change Admin Password</label>
-                        <input type="password" id="changeAdminPassword" placeholder="Enter new password">
-                        <button class="btn-secondary" style="margin-top: 0.75rem;" onclick="changePassword()">Update Password</button>
-                    </div>
-
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <h4 style="margin:2rem 0 1rem 0;font-weight:700;">Admin Password</h4>
+                    <div class="form-group" style="margin-bottom:1rem;"><label>Change Admin Password</label><input type="password" id="changeAdminPassword" placeholder="Enter new password"><button class="btn-secondary" style="margin-top:0.75rem;" onclick="changePassword()">Update Password</button></div>
+                    <div style="display:flex;gap:1rem;margin-top:2rem;">
                         <button class="btn-primary" onclick="saveBranding()">Save Settings</button>
                         <button class="btn-secondary" onclick="resetBranding()">Reset to Default</button>
                     </div>
                 </div>
             </div>
 
-            <!-- DATA MANAGEMENT TAB -->
+            <!-- DATA TAB -->
             <div id="data-tab" class="tab-content">
                 <div class="export-section">
                     <h3>💾 Export / Import Data</h3>
-                    <p style="margin-bottom: 2rem; color: #6b7280;">Backup your data or transfer it to another browser</p>
-                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <p style="margin-bottom:2rem;color:#6b7280;">Backup your data or transfer it to another browser</p>
+                    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
                         <button class="btn-primary" onclick="exportData()">📥 Export All Data</button>
                         <button class="btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import Data</button>
                         <button class="btn-danger" onclick="clearAllData()">🗑️ Clear All Data</button>
                     </div>
-                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                    <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importData(event)">
                 </div>
             </div>
         </div>
@@ -1247,6 +478,19 @@
         let editingCategoryId = null;
         let isAdminMode = false;
 
+        // --------------------------------------------------------
+        // GLOBAL HELPER: safely escapes a string for use inside
+        // an HTML attribute value (e.g. value="..." or onclick="...")
+        // --------------------------------------------------------
+        function htmlEsc(s) {
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             initParticles();
             initMouseParallax();
@@ -1258,40 +502,23 @@
             displayProvidersList();
             displayCategories();
             displayAreas();
-            
-            document.getElementById('brandPrimaryColor').addEventListener('input', e => {
-                document.getElementById('brandPrimaryColorHex').value = e.target.value;
-            });
-            document.getElementById('brandSecondaryColor').addEventListener('input', e => {
-                document.getElementById('brandSecondaryColorHex').value = e.target.value;
-            });
-            document.getElementById('brandPrimaryColorHex').addEventListener('input', e => {
-                if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
-                    document.getElementById('brandPrimaryColor').value = e.target.value;
-                }
-            });
-            document.getElementById('brandSecondaryColorHex').addEventListener('input', e => {
-                if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
-                    document.getElementById('brandSecondaryColor').value = e.target.value;
-                }
-            });
 
-            document.getElementById('adminPassword').addEventListener('keypress', e => {
-                if (e.key === 'Enter') checkAdminPassword();
-            });
+            document.getElementById('brandPrimaryColor').addEventListener('input', e => { document.getElementById('brandPrimaryColorHex').value = e.target.value; });
+            document.getElementById('brandSecondaryColor').addEventListener('input', e => { document.getElementById('brandSecondaryColorHex').value = e.target.value; });
+            document.getElementById('brandPrimaryColorHex').addEventListener('input', e => { if (/^#[0-9A-F]{6}$/i.test(e.target.value)) document.getElementById('brandPrimaryColor').value = e.target.value; });
+            document.getElementById('brandSecondaryColorHex').addEventListener('input', e => { if (/^#[0-9A-F]{6}$/i.test(e.target.value)) document.getElementById('brandSecondaryColor').value = e.target.value; });
+            document.getElementById('adminPassword').addEventListener('keypress', e => { if (e.key === 'Enter') checkAdminPassword(); });
         });
 
         function initParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particlesContainer.appendChild(particle);
+            const c = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                c.appendChild(p);
             }
         }
 
@@ -1300,214 +527,123 @@
                 const orbs = document.querySelectorAll('.orb');
                 const x = e.clientX / window.innerWidth;
                 const y = e.clientY / window.innerHeight;
-                
-                orbs.forEach((orb, index) => {
-                    const speed = (index + 1) * 20;
-                    const xOffset = (x - 0.5) * speed;
-                    const yOffset = (y - 0.5) * speed;
-                    orb.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+                orbs.forEach((orb, i) => {
+                    const speed = (i + 1) * 20;
+                    orb.style.transform = `translate(${(x-0.5)*speed}px, ${(y-0.5)*speed}px)`;
                 });
             });
         }
 
+        // ---- DATA LAYER ----
         function loadData() {
-            const storedProviders = localStorage.getItem('autoProviders');
-            const storedCategories = localStorage.getItem('autoCategories');
-            const storedAreas = localStorage.getItem('autoAreas');
-            const storedBranding = localStorage.getItem('autoBranding');
-
-            providers = storedProviders ? JSON.parse(storedProviders) : [];
-            categories = storedCategories ? JSON.parse(storedCategories) : getDefaultCategories();
-            areas = storedAreas ? JSON.parse(storedAreas) : getDefaultAreas();
-            branding = storedBranding ? JSON.parse(storedBranding) : getDefaultBranding();
-
-            if (!storedCategories) saveCategories();
-            if (!storedAreas) saveAreas();
-            if (!storedBranding) saveBrandingData();
+            const sp = localStorage.getItem('autoProviders');
+            const sc = localStorage.getItem('autoCategories');
+            const sa = localStorage.getItem('autoAreas');
+            const sb = localStorage.getItem('autoBranding');
+            providers  = sp ? JSON.parse(sp) : [];
+            categories = sc ? JSON.parse(sc) : getDefaultCategories();
+            areas      = sa ? JSON.parse(sa) : getDefaultAreas();
+            branding   = sb ? JSON.parse(sb) : getDefaultBranding();
+            if (!sc) saveCategories();
+            if (!sa) saveAreas();
+            if (!sb) saveBrandingData();
         }
 
         function getDefaultCategories() {
             return [
-                {id: 1, name: 'Engine Repair', description: 'Engine diagnostics and repairs'},
-                {id: 2, name: 'Transmission', description: 'Automatic and manual transmission'},
-                {id: 3, name: 'Electrical Systems', description: 'Wiring and electrical repairs'},
-                {id: 4, name: 'Brake Services', description: 'Brake pads and rotors'},
-                {id: 5, name: 'Suspension & Steering', description: 'Shock absorbers and alignment'},
-                {id: 6, name: 'Body Work & Paint', description: 'Dent repair and painting'},
-                {id: 7, name: 'Tire Services', description: 'Tire sales and mounting'},
-                {id: 8, name: 'Air Conditioning', description: 'AC repair and recharging'},
-                {id: 9, name: 'Detailing & Cleaning', description: 'Interior and exterior cleaning'},
-                {id: 10, name: 'Oil Change & Maintenance', description: 'Routine maintenance'}
+                {id:1,name:'Engine Repair',description:'Engine diagnostics and repairs'},
+                {id:2,name:'Transmission',description:'Automatic and manual transmission'},
+                {id:3,name:'Electrical Systems',description:'Wiring and electrical repairs'},
+                {id:4,name:'Brake Services',description:'Brake pads and rotors'},
+                {id:5,name:'Suspension & Steering',description:'Shock absorbers and alignment'},
+                {id:6,name:'Body Work & Paint',description:'Dent repair and painting'},
+                {id:7,name:'Tire Services',description:'Tire sales and mounting'},
+                {id:8,name:'Air Conditioning',description:'AC repair and recharging'},
+                {id:9,name:'Detailing & Cleaning',description:'Interior and exterior cleaning'},
+                {id:10,name:'Oil Change & Maintenance',description:'Routine maintenance'}
             ];
         }
 
         function getDefaultAreas() {
             return [
-                'CBD (Central Business District)',
-                'Kabulonga',
-                'Roma',
-                'Woodlands',
-                'Chelston',
-                'Kabwata',
-                'Longacres',
-                'Olympia Park',
-                'Rhodes Park',
-                'Northmead',
-                'Chilenje',
-                'Kalingalinga',
-                'Mtendere',
-                'Garden House',
-                'Meanwood',
-                'Kalundu',
-                'Chaisa',
-                'Chawama',
-                'Chipata Compound',
-                'Emmasdale',
-                'Kabanana',
-                'Kamwala',
-                'Lilayi',
-                'Makeni',
-                'Matero',
-                'Ngombe',
-                'PHI (President\'s Housing Initiative)',
-                'Salama Park',
-                'Jesmondine',
-                'State Lodge',
-                'Sunningdale',
-                'Twin Palm',
-                'Fair View',
-                'Avondale',
-                'Libala',
-                'Mandevu',
-                'John Laing',
-                'Chudleigh',
-                'Silverest',
-                'Makishi',
-                'Kamulanga',
-                'Palabana',
-                'Ng\'ombe',
-                'Zingalume',
-                'Bauleni',
-                'Misisi',
-                'George',
-                'Kanyama'
+                'CBD (Central Business District)','Kabulonga','Roma','Woodlands','Chelston',
+                'Kabwata','Longacres','Olympia Park','Rhodes Park','Northmead',
+                'Chilenje','Kalingalinga','Mtendere','Garden House','Meanwood',
+                'Kalundu','Chaisa','Chawama','Chipata Compound','Emmasdale',
+                'Kabanana','Kamwala','Lilayi','Makeni','Matero','Ngombe',
+                "PHI (President's Housing Initiative)",'Salama Park','Jesmondine',
+                'State Lodge','Sunningdale','Twin Palm','Fair View','Avondale',
+                'Libala','Mandevu','John Laing','Chudleigh','Silverest','Makishi',
+                'Kamulanga','Palabana',"Ng'ombe",'Zingalume','Bauleni','Misisi',
+                'George','Kanyama'
             ];
         }
 
         function getDefaultBranding() {
-            return {
-                title: 'Auto Hive',
-                tagline: 'Lusaka\'s Auto Services Hub',
-                icon: '🚗',
-                primaryColor: '#f59e0b',
-                secondaryColor: '#d97706'
-            };
+            return { title:'Auto Hive', tagline:"Lusaka's Auto Services Hub", icon:'🚗', primaryColor:'#f59e0b', secondaryColor:'#d97706' };
         }
 
-        function saveProviders() {
-            localStorage.setItem('autoProviders', JSON.stringify(providers));
-        }
+        function saveProviders()   { localStorage.setItem('autoProviders',  JSON.stringify(providers)); }
+        function saveCategories()  { localStorage.setItem('autoCategories', JSON.stringify(categories)); }
+        function saveAreas()       { localStorage.setItem('autoAreas',      JSON.stringify(areas)); }
+        function saveBrandingData(){ localStorage.setItem('autoBranding',   JSON.stringify(branding)); }
 
-        function saveCategories() {
-            localStorage.setItem('autoCategories', JSON.stringify(categories));
-        }
-
-        function saveAreas() {
-            localStorage.setItem('autoAreas', JSON.stringify(areas));
-        }
-
-        function saveBrandingData() {
-            localStorage.setItem('autoBranding', JSON.stringify(branding));
-        }
-
+        // ---- ADMIN AUTH ----
         function toggleAdmin() {
-            if (isAdminMode) {
-                logoutAdmin();
-            } else {
-                document.getElementById('loginOverlay').classList.add('active');
-            }
+            if (isAdminMode) logoutAdmin();
+            else document.getElementById('loginOverlay').classList.add('active');
         }
-
         function closeLogin() {
             document.getElementById('loginOverlay').classList.remove('active');
             document.getElementById('adminPassword').value = '';
             document.getElementById('loginError').classList.remove('show');
         }
-
         function setAdminPassword() {
-            const newPassword = document.getElementById('newAdminPassword').value;
-            if (!newPassword) {
-                alert('Please enter a password');
-                return;
-            }
-            localStorage.setItem('adminPassword', newPassword);
+            const p = document.getElementById('newAdminPassword').value;
+            if (!p) { alert('Please enter a password'); return; }
+            localStorage.setItem('adminPassword', p);
             alert('Admin password set successfully! You can now login.');
             document.getElementById('newAdminPassword').value = '';
         }
-
         function checkAdminPassword() {
-            const storedPassword = localStorage.getItem('adminPassword');
-            const enteredPassword = document.getElementById('adminPassword').value;
-
-            if (!storedPassword) {
-                alert('No admin password set. Please set one first.');
-                return;
-            }
-
-            if (enteredPassword === storedPassword) {
-                isAdminMode = true;
-                closeLogin();
-                enableAdminMode();
-            } else {
-                document.getElementById('loginError').classList.add('show');
-            }
+            const stored  = localStorage.getItem('adminPassword');
+            const entered = document.getElementById('adminPassword').value;
+            if (!stored) { alert('No admin password set. Please set one first.'); return; }
+            if (entered === stored) { isAdminMode = true; closeLogin(); enableAdminMode(); }
+            else { document.getElementById('loginError').classList.add('show'); }
         }
-
         function enableAdminMode() {
-            document.querySelectorAll('.admin-only').forEach(el => {
-                el.style.display = 'block';
-            });
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
             document.getElementById('adminButtonText').textContent = '🔓 Logout';
             alert('Admin mode enabled!');
         }
-
         function logoutAdmin() {
             isAdminMode = false;
-            document.querySelectorAll('.admin-only').forEach(el => {
-                el.style.display = 'none';
-            });
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
             document.getElementById('adminButtonText').textContent = 'Admin Login';
             switchTab('search');
             alert('Logged out of admin mode');
         }
-
         function changePassword() {
-            const newPassword = document.getElementById('changeAdminPassword').value;
-            if (!newPassword) {
-                alert('Please enter a new password');
-                return;
-            }
+            const p = document.getElementById('changeAdminPassword').value;
+            if (!p) { alert('Please enter a new password'); return; }
             if (confirm('Change admin password?')) {
-                localStorage.setItem('adminPassword', newPassword);
+                localStorage.setItem('adminPassword', p);
                 alert('Password updated successfully!');
                 document.getElementById('changeAdminPassword').value = '';
             }
         }
 
+        // ---- MAP ----
         function initMap() {
             map = L.map('map').setView([-15.4167, 28.2833], 12);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'© OpenStreetMap contributors' }).addTo(map);
         }
 
-        async function findLocation() {
+        // FIX #1: function now receives the event explicitly (HTML passes it via onclick="findLocation(event)")
+        async function findLocation(event) {
             const searchQuery = document.getElementById('locationSearch').value.trim();
-            
-            if (!searchQuery) {
-                alert('Please enter an address or location to search');
-                return;
-            }
+            if (!searchQuery) { alert('Please enter an address or location to search'); return; }
 
             const btn = event.target;
             const originalText = btn.textContent;
@@ -1515,171 +651,130 @@
             btn.disabled = true;
 
             try {
-                const response = await fetch(
-                    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery + ', Lusaka, Zambia')}&limit=1`
-                );
-                
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery + ', Lusaka, Zambia')}&limit=1`);
                 const data = await response.json();
-
                 if (data && data.length > 0) {
-                    const location = data[0];
-                    document.getElementById('latitude').value = parseFloat(location.lat).toFixed(6);
-                    document.getElementById('longitude').value = parseFloat(location.lon).toFixed(6);
-                    
-                    if (!document.getElementById('streetAddress').value) {
-                        document.getElementById('streetAddress').value = location.display_name.split(',')[0];
-                    }
-                    
-                    alert(`✅ Location found!\n📍 ${location.display_name}`);
+                    const loc = data[0];
+                    document.getElementById('latitude').value  = parseFloat(loc.lat).toFixed(6);
+                    document.getElementById('longitude').value = parseFloat(loc.lon).toFixed(6);
+                    if (!document.getElementById('streetAddress').value)
+                        document.getElementById('streetAddress').value = loc.display_name.split(',')[0];
+                    alert(`✅ Location found!\n📍 ${loc.display_name}`);
                 } else {
                     alert('❌ Location not found. Please try:\n• Adding more details (e.g., "Cairo Road, CBD, Lusaka")\n• Using area names\n• Or enter coordinates manually');
                 }
-            } catch (error) {
+            } catch (err) {
                 alert('Error finding location. Please check your internet connection or enter coordinates manually.');
-                console.error('Geocoding error:', error);
+                console.error('Geocoding error:', err);
             } finally {
                 btn.textContent = originalText;
                 btn.disabled = false;
             }
         }
 
+        // ---- TABS ----
         function switchTab(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-            // Find the tab button whose onclick contains the matching tab name
             document.querySelectorAll('.tab').forEach(t => {
-                if (t.getAttribute('onclick') === `switchTab('${tab}')`) {
-                    t.classList.add('active');
-                }
+                if (t.getAttribute('onclick') === `switchTab('${tab}')`) t.classList.add('active');
             });
             document.getElementById(tab + '-tab').classList.add('active');
         }
 
+        // FIX #3: every place that puts area/category names into HTML attributes
+        // now runs them through htmlEsc() so apostrophes become &#39; safely.
         function updateDropdowns() {
-            const serviceSelect = document.getElementById('serviceType');
-            serviceSelect.innerHTML = '<option value="">All Services</option>' +
-                categories.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+            document.getElementById('serviceType').innerHTML = '<option value="">All Services</option>' +
+                categories.map(c => `<option value="${htmlEsc(c.name)}">${htmlEsc(c.name)}</option>`).join('');
 
-            const areaFilterSelect = document.getElementById('areaFilter');
-            areaFilterSelect.innerHTML = '<option value="">All Areas</option>' +
-                areas.map(a => `<option value="${a}">${a}</option>`).join('');
+            document.getElementById('areaFilter').innerHTML = '<option value="">All Areas</option>' +
+                areas.map(a => `<option value="${htmlEsc(a)}">${htmlEsc(a)}</option>`).join('');
 
-            const areaSelect = document.getElementById('area');
-            areaSelect.innerHTML = '<option value="">Select Area</option>' +
-                areas.map(a => `<option value="${a}">${a}</option>`).join('');
+            document.getElementById('area').innerHTML = '<option value="">Select Area</option>' +
+                areas.map(a => `<option value="${htmlEsc(a)}">${htmlEsc(a)}</option>`).join('');
 
-            const servicesSelect = document.getElementById('services');
-            servicesSelect.innerHTML = categories.map(c => 
-                `<option value="${c.name}">${c.name}</option>`
-            ).join('');
+            document.getElementById('services').innerHTML =
+                categories.map(c => `<option value="${htmlEsc(c.name)}">${htmlEsc(c.name)}</option>`).join('');
         }
 
+        // ---- BRANDING ----
         function applyBranding() {
-            const brandText = document.querySelector('.brand-name');
-            const taglineText = document.querySelector('.brand-tagline');
-            
-            if (brandText) brandText.textContent = branding.title;
-            if (taglineText) taglineText.textContent = branding.tagline;
+            const bt = document.querySelector('.brand-name');
+            const tl = document.querySelector('.brand-tagline');
+            if (bt) bt.textContent = branding.title;
+            if (tl) tl.textContent = branding.tagline;
             document.title = branding.title;
-
             document.documentElement.style.setProperty('--primary-color', branding.primaryColor);
             document.documentElement.style.setProperty('--secondary-color', branding.secondaryColor);
-
-            document.getElementById('brandAppTitle').value = branding.title;
-            document.getElementById('brandAppTagline').value = branding.tagline;
-            document.getElementById('brandAppIcon').value = branding.icon || '';
-            document.getElementById('brandPrimaryColor').value = branding.primaryColor;
-            document.getElementById('brandPrimaryColorHex').value = branding.primaryColor;
-            document.getElementById('brandSecondaryColor').value = branding.secondaryColor;
-            document.getElementById('brandSecondaryColorHex').value = branding.secondaryColor;
+            document.getElementById('brandAppTitle').value         = branding.title;
+            document.getElementById('brandAppTagline').value       = branding.tagline;
+            document.getElementById('brandAppIcon').value          = branding.icon || '';
+            document.getElementById('brandPrimaryColor').value     = branding.primaryColor;
+            document.getElementById('brandPrimaryColorHex').value  = branding.primaryColor;
+            document.getElementById('brandSecondaryColor').value   = branding.secondaryColor;
+            document.getElementById('brandSecondaryColorHex').value= branding.secondaryColor;
         }
-
         function saveBranding() {
             branding = {
                 title: document.getElementById('brandAppTitle').value || 'Auto Hive',
-                tagline: document.getElementById('brandAppTagline').value || 'Lusaka\'s Auto Services Hub',
+                tagline: document.getElementById('brandAppTagline').value || "Lusaka's Auto Services Hub",
                 icon: document.getElementById('brandAppIcon').value || '🚗',
                 primaryColor: document.getElementById('brandPrimaryColor').value,
                 secondaryColor: document.getElementById('brandSecondaryColor').value
             };
-            saveBrandingData();
-            applyBranding();
+            saveBrandingData(); applyBranding();
             alert('Branding updated successfully!');
         }
-
         function resetBranding() {
-            if (confirm('Reset to default branding?')) {
-                branding = getDefaultBranding();
-                saveBrandingData();
-                applyBranding();
-            }
+            if (confirm('Reset to default branding?')) { branding = getDefaultBranding(); saveBrandingData(); applyBranding(); }
         }
 
+        // ---- CATEGORIES ----
         function saveCategory() {
             const name = document.getElementById('categoryName').value.trim();
-            const description = document.getElementById('categoryDescription').value.trim();
-
-            if (!name) {
-                alert('Please enter a category name');
-                return;
-            }
-
+            const desc = document.getElementById('categoryDescription').value.trim();
+            if (!name) { alert('Please enter a category name'); return; }
             if (editingCategoryId) {
-                const index = categories.findIndex(c => c.id === editingCategoryId);
-                categories[index] = {id: editingCategoryId, name, description};
+                const i = categories.findIndex(c => c.id === editingCategoryId);
+                categories[i] = { id: editingCategoryId, name, description: desc };
                 editingCategoryId = null;
             } else {
                 const id = categories.length > 0 ? Math.max(...categories.map(c => c.id)) + 1 : 1;
-                categories.push({id, name, description});
+                categories.push({ id, name, description: desc });
             }
-
-            saveCategories();
-            updateDropdowns();
-            displayCategories();
-            resetCategoryForm();
+            saveCategories(); updateDropdowns(); displayCategories(); resetCategoryForm();
             alert('Category saved!');
         }
-
         function resetCategoryForm() {
             document.getElementById('categoryName').value = '';
             document.getElementById('categoryDescription').value = '';
             editingCategoryId = null;
         }
-
         function editCategory(id) {
-            const category = categories.find(c => c.id === id);
-            if (!category) return;
-
-            document.getElementById('categoryName').value = category.name;
-            document.getElementById('categoryDescription').value = category.description || '';
+            const c = categories.find(c => c.id === id);
+            if (!c) return;
+            document.getElementById('categoryName').value        = c.name;
+            document.getElementById('categoryDescription').value = c.description || '';
             editingCategoryId = id;
             window.scrollTo(0, 0);
         }
-
         function deleteCategory(id) {
             if (confirm('Delete this category? Providers using it will keep the name.')) {
                 categories = categories.filter(c => c.id !== id);
-                saveCategories();
-                updateDropdowns();
-                displayCategories();
+                saveCategories(); updateDropdowns(); displayCategories();
             }
         }
-
         function displayCategories() {
             const container = document.getElementById('categoryList');
-            if (categories.length === 0) {
-                container.innerHTML = '<div class="no-results">No categories yet.</div>';
-                return;
-            }
-
+            if (categories.length === 0) { container.innerHTML = '<div class="no-results">No categories yet.</div>'; return; }
             container.innerHTML = categories.map(c => `
                 <div class="category-item">
                     <div>
-                        <strong>${c.name}</strong>
-                        ${c.description ? `<br><small style="color: #6b7280;">${c.description}</small>` : ''}
+                        <strong>${htmlEsc(c.name)}</strong>
+                        ${c.description ? `<br><small style="color:#6b7280;">${htmlEsc(c.description)}</small>` : ''}
                     </div>
-                    <div style="display: flex; gap: 0.75rem;">
+                    <div style="display:flex;gap:0.75rem;">
                         <button class="btn-secondary btn-small" onclick="editCategory(${c.id})">Edit</button>
                         <button class="btn-danger btn-small" onclick="deleteCategory(${c.id})">Delete</button>
                     </div>
@@ -1687,144 +782,100 @@
             `).join('');
         }
 
+        // ---- AREAS ----
         function saveArea() {
             const area = document.getElementById('areaName').value.trim();
-            if (!area) {
-                alert('Please enter an area name');
-                return;
-            }
-
+            if (!area) { alert('Please enter an area name'); return; }
             if (!areas.includes(area)) {
-                areas.push(area);
-                areas.sort();
-                saveAreas();
-                updateDropdowns();
-                displayAreas();
+                areas.push(area); areas.sort();
+                saveAreas(); updateDropdowns(); displayAreas();
                 document.getElementById('areaName').value = '';
                 alert('Area added!');
-            } else {
-                alert('Area already exists');
+            } else { alert('Area already exists'); }
+        }
+
+        // FIX #4 & #5: deleteArea now receives a numeric INDEX, not the area string.
+        // This completely sidesteps the apostrophe-in-onclick problem — numbers never
+        // contain characters that break HTML attribute parsing.
+        function deleteArea(index) {
+            const area = areas[index];   // look up the real string from the live array
+            if (confirm(`Delete area "${area}"?`)) {
+                areas.splice(index, 1);
+                saveAreas(); updateDropdowns(); displayAreas();
             }
         }
 
-        function deleteArea(area) {
-            // Decode any HTML entities back to the real characters
-            const decoded = area.replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-            if (confirm(`Delete area "${decoded}"?`)) {
-                areas = areas.filter(a => a !== decoded);
-                saveAreas();
-                updateDropdowns();
-                displayAreas();
-            }
-        }
-
+        // FIX #4 & #5 (cont.): displayAreas passes the loop INDEX into onclick, not the string.
         function displayAreas() {
             const container = document.getElementById('areaList');
-            if (areas.length === 0) {
-                container.innerHTML = '<div class="no-results">No areas yet.</div>';
-                return;
-            }
-
-            container.innerHTML = areas.map(a => {
-                const safeArea = a.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-                return `
+            if (areas.length === 0) { container.innerHTML = '<div class="no-results">No areas yet.</div>'; return; }
+            container.innerHTML = areas.map((a, index) => `
                 <div class="category-item">
-                    <div><strong>${safeArea}</strong></div>
-                    <button class="btn-danger btn-small" onclick="deleteArea('${safeArea}')">Delete</button>
-                </div>`;
-            }).join('');
+                    <div><strong>${htmlEsc(a)}</strong></div>
+                    <button class="btn-danger btn-small" onclick="deleteArea(${index})">Delete</button>
+                </div>
+            `).join('');
         }
 
+        // ---- PROVIDERS ----
         function saveProvider(e) {
             e.preventDefault();
-            
-            const servicesSelect = document.getElementById('services');
-            const selectedServices = Array.from(servicesSelect.selectedOptions).map(o => o.value);
-
+            const selectedServices = Array.from(document.getElementById('services').selectedOptions).map(o => o.value);
             const provider = {
                 id: editingId || Date.now(),
-                businessName: document.getElementById('businessName').value,
-                phoneNumber: document.getElementById('phoneNumber').value,
-                area: document.getElementById('area').value,
-                priceRange: document.getElementById('priceRange').value,
-                latitude: parseFloat(document.getElementById('latitude').value),
-                longitude: parseFloat(document.getElementById('longitude').value),
-                streetAddress: document.getElementById('streetAddress').value,
-                description: document.getElementById('description').value,
-                services: selectedServices,
+                businessName:   document.getElementById('businessName').value,
+                phoneNumber:    document.getElementById('phoneNumber').value,
+                area:           document.getElementById('area').value,
+                priceRange:     document.getElementById('priceRange').value,
+                latitude:       parseFloat(document.getElementById('latitude').value),
+                longitude:      parseFloat(document.getElementById('longitude').value),
+                streetAddress:  document.getElementById('streetAddress').value,
+                description:    document.getElementById('description').value,
+                services:       selectedServices,
                 specializations: document.getElementById('specializations').value.split(',').map(s => s.trim()).filter(s => s),
-                rating: parseFloat(document.getElementById('rating').value) || 4.0,
+                rating:         parseFloat(document.getElementById('rating').value) || 4.0,
                 yearsInBusiness: parseInt(document.getElementById('yearsInBusiness').value) || 0
             };
-
-            if (editingId) {
-                const index = providers.findIndex(p => p.id === editingId);
-                providers[index] = provider;
-                editingId = null;
-            } else {
-                providers.push(provider);
-            }
-
-            saveProviders();
-            resetForm();
-            displayProvidersList();
-            displayProviders();
+            if (editingId) { providers[providers.findIndex(p => p.id === editingId)] = provider; editingId = null; }
+            else { providers.push(provider); }
+            saveProviders(); resetForm(); displayProvidersList(); displayProviders();
             alert('Provider saved successfully!');
         }
-
-        function resetForm() {
-            document.getElementById('providerForm').reset();
-            editingId = null;
-        }
+        function resetForm() { document.getElementById('providerForm').reset(); editingId = null; }
 
         function editProvider(id) {
-            const provider = providers.find(p => p.id === id);
-            if (!provider) return;
-
+            const p = providers.find(p => p.id === id);
+            if (!p) return;
             editingId = id;
-            document.getElementById('businessName').value = provider.businessName;
-            document.getElementById('phoneNumber').value = provider.phoneNumber;
-            document.getElementById('area').value = provider.area;
-            document.getElementById('priceRange').value = provider.priceRange;
-            document.getElementById('latitude').value = provider.latitude;
-            document.getElementById('longitude').value = provider.longitude;
-            document.getElementById('streetAddress').value = provider.streetAddress || '';
-            document.getElementById('description').value = provider.description || '';
-            
-            const servicesSelect = document.getElementById('services');
-            Array.from(servicesSelect.options).forEach(option => {
-                option.selected = provider.services.includes(option.value);
-            });
-            
-            document.getElementById('specializations').value = provider.specializations.join(', ');
-            document.getElementById('rating').value = provider.rating;
-            document.getElementById('yearsInBusiness').value = provider.yearsInBusiness || 0;
-
+            document.getElementById('businessName').value    = p.businessName;
+            document.getElementById('phoneNumber').value     = p.phoneNumber;
+            document.getElementById('area').value            = p.area;
+            document.getElementById('priceRange').value      = p.priceRange;
+            document.getElementById('latitude').value        = p.latitude;
+            document.getElementById('longitude').value       = p.longitude;
+            document.getElementById('streetAddress').value   = p.streetAddress || '';
+            document.getElementById('description').value     = p.description || '';
+            Array.from(document.getElementById('services').options).forEach(o => o.selected = p.services.includes(o.value));
+            document.getElementById('specializations').value = p.specializations.join(', ');
+            document.getElementById('rating').value          = p.rating;
+            document.getElementById('yearsInBusiness').value = p.yearsInBusiness || 0;
             switchTab('admin');
             window.scrollTo(0, 0);
         }
-
         function deleteProvider(id) {
             if (confirm('Are you sure you want to delete this provider?')) {
                 providers = providers.filter(p => p.id !== id);
-                saveProviders();
-                displayProvidersList();
-                displayProviders();
+                saveProviders(); displayProvidersList(); displayProviders();
             }
         }
-
         function displayProvidersList() {
             const container = document.getElementById('providersList');
-            if (providers.length === 0) {
-                container.innerHTML = '<div class="no-results">No providers yet. Add your first provider above!</div>';
-                return;
-            }
-
+            if (providers.length === 0) { container.innerHTML = '<div class="no-results">No providers yet. Add your first provider above!</div>'; return; }
             container.innerHTML = providers.map(p => `
                 <div class="provider-item">
                     <div>
-                        <strong style="font-size: 1.05rem;">${p.businessName}</strong><br>
-                        <small style="color: #6b7280;">${p.area} • ${p.phoneNumber}</small>
+                        <strong style="font-size:1.05rem;">${htmlEsc(p.businessName)}</strong><br>
+                        <small style="color:#6b7280;">${htmlEsc(p.area)} • ${htmlEsc(p.phoneNumber)}</small>
                     </div>
                     <div class="provider-actions">
                         <button class="btn-secondary btn-small" onclick="editProvider(${p.id})">Edit</button>
@@ -1834,156 +885,99 @@
             `).join('');
         }
 
-        function searchProviders() {
-            displayProviders();
-        }
+        // ---- SEARCH / DISPLAY ----
+        function searchProviders() { displayProviders(); }
 
         function displayProviders() {
-            const serviceType = document.getElementById('serviceType').value;
-            const budgetRange = document.getElementById('budgetRange').value;
-            const area = document.getElementById('areaFilter').value;
-            const vehicleMake = document.getElementById('vehicleMake').value.toLowerCase().trim();
+            const serviceType  = document.getElementById('serviceType').value;
+            const budgetRange  = document.getElementById('budgetRange').value;
+            const area         = document.getElementById('areaFilter').value;
+            const vehicleMake  = document.getElementById('vehicleMake').value.toLowerCase().trim();
 
             let filtered = providers.filter(p => {
                 if (serviceType && !p.services.includes(serviceType)) return false;
                 if (budgetRange && p.priceRange !== budgetRange) return false;
                 if (area && p.area !== area) return false;
-                
                 if (vehicleMake) {
-                    if (!p.specializations || p.specializations.length === 0) {
-                        return true;
-                    }
-                    const matches = p.specializations.some(s => 
-                        s.toLowerCase().trim().includes(vehicleMake) || 
-                        vehicleMake.includes(s.toLowerCase().trim())
-                    );
-                    if (!matches) return false;
+                    if (!p.specializations || p.specializations.length === 0) return true;
+                    if (!p.specializations.some(s => s.toLowerCase().trim().includes(vehicleMake) || vehicleMake.includes(s.toLowerCase().trim()))) return false;
                 }
                 return true;
             });
-
             filtered.sort((a, b) => b.rating - a.rating);
 
             markers.forEach(m => map.removeLayer(m));
             markers = [];
-
             filtered.forEach(p => {
-                const marker = L.marker([p.latitude, p.longitude])
-                    .bindPopup(`<strong>${p.businessName}</strong><br>${p.area}`);
+                const marker = L.marker([p.latitude, p.longitude]).bindPopup(`<strong>${htmlEsc(p.businessName)}</strong><br>${htmlEsc(p.area)}`);
                 marker.addTo(map);
                 markers.push(marker);
             });
-
-            if (filtered.length > 0) {
-                const bounds = L.latLngBounds(filtered.map(p => [p.latitude, p.longitude]));
-                map.fitBounds(bounds, { padding: [50, 50] });
-            }
+            if (filtered.length > 0) map.fitBounds(L.latLngBounds(filtered.map(p => [p.latitude, p.longitude])), { padding:[50,50] });
 
             const resultsDiv = document.getElementById('results');
-            if (filtered.length === 0) {
-                resultsDiv.innerHTML = '<div class="no-results">😔 No providers found matching your criteria.<br>Try adjusting your filters.</div>';
-                return;
-            }
+            if (filtered.length === 0) { resultsDiv.innerHTML = '<div class="no-results">😔 No providers found matching your criteria.<br>Try adjusting your filters.</div>'; return; }
 
             resultsDiv.innerHTML = filtered.map(p => `
                 <div class="provider-card">
                     <div class="provider-header">
-                        <div class="provider-name">${p.businessName}</div>
-                        <div class="price-badge price-${p.priceRange}">${p.priceRange.replace('-', ' ')}</div>
+                        <div class="provider-name">${htmlEsc(p.businessName)}</div>
+                        <div class="price-badge price-${p.priceRange}">${p.priceRange.replace('-',' ')}</div>
                     </div>
                     <div class="rating">
-                        <div class="stars">${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5 - Math.round(p.rating))}</div>
+                        <div class="stars">${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5-Math.round(p.rating))}</div>
                         <span>${p.rating.toFixed(1)}</span>
                     </div>
                     <div class="provider-info">
-                        <div>📍 ${p.area}${p.streetAddress ? ', ' + p.streetAddress : ''}</div>
-                        <div>📞 ${p.phoneNumber}</div>
+                        <div>📍 ${htmlEsc(p.area)}${p.streetAddress ? ', ' + htmlEsc(p.streetAddress) : ''}</div>
+                        <div>📞 ${htmlEsc(p.phoneNumber)}</div>
                         ${p.yearsInBusiness ? `<div>🏆 ${p.yearsInBusiness} years in business</div>` : ''}
-                        ${p.description ? `<div style="margin-top: 0.75rem;">${p.description}</div>` : ''}
-                        ${p.specializations.length ? `<div style="margin-top: 0.75rem;"><strong>Specializes in:</strong> ${p.specializations.join(', ')}</div>` : '<div style="margin-top: 0.75rem; color: #10b981;"><strong>✓ Works on all vehicles</strong></div>'}
+                        ${p.description ? `<div style="margin-top:0.75rem;">${htmlEsc(p.description)}</div>` : ''}
+                        ${p.specializations.length ? `<div style="margin-top:0.75rem;"><strong>Specializes in:</strong> ${htmlEsc(p.specializations.join(', '))}</div>` : '<div style="margin-top:0.75rem;color:#10b981;"><strong>✓ Works on all vehicles</strong></div>'}
                     </div>
-                    ${p.services.length ? `
-                        <div class="services-tags">
-                            ${p.services.map(s => `<span class="service-tag">${s}</span>`).join('')}
-                        </div>
-                    ` : ''}
+                    ${p.services.length ? `<div class="services-tags">${p.services.map(s => `<span class="service-tag">${htmlEsc(s)}</span>`).join('')}</div>` : ''}
                 </div>
             `).join('');
         }
 
+        // ---- DATA IMPORT / EXPORT ----
         function exportData() {
-            const data = {
-                providers,
-                categories,
-                areas,
-                branding,
-                exportDate: new Date().toISOString()
-            };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
+            const data = { providers, categories, areas, branding, exportDate: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
             a.href = url;
             a.download = `auto-hive-backup-${new Date().toISOString().split('T')[0]}.json`;
             a.click();
             URL.revokeObjectURL(url);
         }
-
         function importData(e) {
             const file = e.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(event) {
                 try {
                     const imported = JSON.parse(event.target.result);
-                    if (confirm(`Import data? This will replace all existing data.`)) {
-                        providers = imported.providers || [];
+                    if (confirm('Import data? This will replace all existing data.')) {
+                        providers  = imported.providers  || [];
                         categories = imported.categories || getDefaultCategories();
-                        areas = imported.areas || getDefaultAreas();
-                        branding = imported.branding || getDefaultBranding();
-                        
-                        saveProviders();
-                        saveCategories();
-                        saveAreas();
-                        saveBrandingData();
-                        
-                        applyBranding();
-                        updateDropdowns();
-                        displayProviders();
-                        displayProvidersList();
-                        displayCategories();
-                        displayAreas();
-                        
+                        areas      = imported.areas      || getDefaultAreas();
+                        branding   = imported.branding   || getDefaultBranding();
+                        saveProviders(); saveCategories(); saveAreas(); saveBrandingData();
+                        applyBranding(); updateDropdowns(); displayProviders(); displayProvidersList(); displayCategories(); displayAreas();
                         alert('Data imported successfully!');
                     }
-                } catch (err) {
-                    alert('Error importing data. Please check the file format.');
-                }
+                } catch (err) { alert('Error importing data. Please check the file format.'); }
             };
             reader.readAsText(file);
             e.target.value = '';
         }
-
         function clearAllData() {
             if (confirm('Are you sure? This will delete ALL data permanently!')) {
                 if (confirm('Really sure? This cannot be undone!')) {
-                    providers = [];
-                    categories = getDefaultCategories();
-                    areas = getDefaultAreas();
-                    branding = getDefaultBranding();
-                    
-                    saveProviders();
-                    saveCategories();
-                    saveAreas();
-                    saveBrandingData();
-                    
-                    applyBranding();
-                    updateDropdowns();
-                    displayProviders();
-                    displayProvidersList();
-                    displayCategories();
-                    displayAreas();
-                    
+                    providers = []; categories = getDefaultCategories(); areas = getDefaultAreas(); branding = getDefaultBranding();
+                    saveProviders(); saveCategories(); saveAreas(); saveBrandingData();
+                    applyBranding(); updateDropdowns(); displayProviders(); displayProvidersList(); displayCategories(); displayAreas();
                     alert('All data cleared.');
                 }
             }
