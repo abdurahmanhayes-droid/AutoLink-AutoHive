@@ -36,6 +36,8 @@
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2a2f4a 100%);
             overflow: hidden;
             z-index: 0;
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .orb {
@@ -44,6 +46,8 @@
             filter: blur(80px);
             opacity: 0.3;
             animation: float 20s infinite ease-in-out;
+            will-change: transform;
+            transform: translateZ(0);
         }
         .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%); top: -10%; left: -10%; animation-delay: 0s; }
         .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%); bottom: -10%; right: -10%; animation-delay: -7s; }
@@ -60,6 +64,8 @@
             background-image: linear-gradient(rgba(245,158,11,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(245,158,11,0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: gridMove 20s linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
         }
         @keyframes gridMove { 0% { transform: translate(0,0); } 100% { transform: translate(50px,50px); } }
 
@@ -512,18 +518,23 @@
 
         function initParticles() {
             const c = document.getElementById('particles');
-            for (let i = 0; i < 30; i++) {
+            // Reduced from 30 to 15 particles for better performance
+            for (let i = 0; i < 15; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
                 p.style.left = Math.random() * 100 + '%';
                 p.style.animationDelay = Math.random() * 15 + 's';
                 p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                p.style.willChange = 'transform';
+                p.style.transform = 'translateZ(0)';
                 c.appendChild(p);
             }
         }
 
         function initMouseParallax() {
+            // Only run parallax when NOT in admin mode to prevent scroll jank
             document.addEventListener('mousemove', (e) => {
+                if (isAdminMode) return; // Skip parallax in admin mode
                 const orbs = document.querySelectorAll('.orb');
                 const x = e.clientX / window.innerWidth;
                 const y = e.clientY / window.innerHeight;
