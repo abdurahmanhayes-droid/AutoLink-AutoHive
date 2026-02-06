@@ -246,7 +246,7 @@
         .price-badge { padding:0.4rem 1rem; border-radius:50px; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
         .price-budget { background:linear-gradient(135deg,#10b981,#059669); color:white; }
         .price-mid-range { background:linear-gradient(135deg,#f59e0b,#d97706); color:white; }
-        .price-premium { background:linear-gradient(135deg,#8b5cf6,#7c3aed); color:white; }
+        .price-premium { background:linear-gradient(135deg,#ef4444,#dc2626); color:white; }
 
         .rating { display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem; padding:0.75rem; background:#fef3c7; border-radius:12px; width:fit-content; }
         .stars { color:#f59e0b; font-size:1.2rem; letter-spacing:2px; }
@@ -1046,7 +1046,7 @@
             const createCustomIcon = (priceRange) => {
                 let color = '#10b981'; // budget - green
                 if (priceRange === 'mid-range') color = '#f59e0b'; // orange
-                if (priceRange === 'premium') color = '#8b5cf6'; // purple
+                if (priceRange === 'premium') color = '#ef4444'; // red
                 
                 return L.divIcon({
                     className: 'custom-marker',
@@ -1088,7 +1088,7 @@
                     <div style="min-width:200px;padding:8px;">
                         <h3 style="margin:0 0 8px 0;color:${
                             p.priceRange === 'budget' ? '#10b981' : 
-                            p.priceRange === 'mid-range' ? '#f59e0b' : '#8b5cf6'
+                            p.priceRange === 'mid-range' ? '#f59e0b' : '#ef4444'
                         };font-weight:700;font-size:1.1rem;">${htmlEsc(p.businessName)}</h3>
                         <div style="margin:4px 0;color:#6b7280;font-size:0.9rem;">
                             <strong>📍</strong> ${htmlEsc(p.area)}
